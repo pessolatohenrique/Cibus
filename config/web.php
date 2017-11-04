@@ -2,12 +2,18 @@
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
+$urlRules = require(__DIR__ . '/url-rules.php');
 
 $config = [
     'id' => 'basic',
     'name' => 'Cibus Nutrição',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log'], 
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Admin',
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -47,19 +53,17 @@ $config = [
         'view' => [
             'theme' => [
                 'pathMap' => [
-                    '@app/views' => '@app/views/layouts'
-                ],
-             ],
+                    '@app/views' => '@app/themes/adminLTE',
+                    '@app/modules' => '@app/themes/basic', // <-- !!!
+                ]
+            ]
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+            //'showScriptName' => false,
+            'rules' => $urlRules
         ],
-        */
     ],
     'params' => $params,
 ];

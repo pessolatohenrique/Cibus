@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
@@ -14,12 +14,12 @@ use app\models\SignupForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 
-class SiteController extends Controller
+class DefaultController extends Controller
 {
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            $theme = "basic";
+            $theme = "adminLTE";
             if (Yii::$app->request->cookies['theme']) {
                 $theme = Yii::$app->request->cookies->getValue('theme');
             }
@@ -84,7 +84,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->isGuest){
-            return $this->redirect(['site/login']);
+            return $this->redirect(['default/login']);
         }else{
             return $this->render('index');
         }
@@ -100,11 +100,11 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['default/index']);
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['default/index']);
         } else {
             return $this->render('login', [
                 'model' => $model,

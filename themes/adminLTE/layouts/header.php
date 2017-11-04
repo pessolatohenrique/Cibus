@@ -43,7 +43,7 @@ $foto_perfil = Yii::$app->user->identity->photo;
                             <div class="pull-right">
                                 <?= Html::a(
                                     'Logout',
-                                    ['/site/logout'],
+                                    ['/admin/default/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
                             </div>
