@@ -3,24 +3,18 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use app\models\PasswordResetRequestForm;
+use app\models\User;
 
-$this->title = 'Login';
-
-$fieldOptions1 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
-];
-
-$fieldOptions2 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
-];
+$this->title = 'Cibus Nutrição | Login';
 ?>
-
+<div class="header-login">
+     <h1 class="text-center">
+        <i class="fa fa-apple fa-3x" aria-hidden="true"></i>
+        <br>
+        Login
+    </h1>
+</div>
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>Login</a>
-    </div>
     <!-- /.login-logo -->
     <?php if(Yii::$app->session->hasFlash('success')): ?>
         <div class="alert alert-success">
@@ -28,26 +22,35 @@ $fieldOptions2 = [
         </div>
     <?php endif; ?>
     <div class="login-box-body">
-        <p class="login-box-msg">Realize o login para ter acesso ao sistema</p>
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label("Usuário") ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'password')->passwordInput()->label("Senha") ?>
 
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            <?= $form->field($model, 'rememberMe')->checkbox()->label("Lembrar Senha") ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 <?= Html::a('Esqueci minha senha',['site/request-password-reset'],
                     [
-                        'class' => 'btn btn-success',
+                        'class' => 'btn btn-info',
                         'data-toggle' => 'modal',
                         'data-target' => "#w0"
                     ])?>
             </div>
 
         <?php ActiveForm::end(); ?>
+
+        <p class="text-center">
+            Não possui uma conta?
+            <?= Html::a('Registre-se',['#'],
+                [
+                    'data-toggle' => 'modal',
+                    'data-target' => "#register"
+                ]
+            )?>
+        </p>
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
@@ -61,5 +64,18 @@ Modal::begin([
         'model' => $model_password,
     ]);
 
+Modal::end();
+?>
+
+<?php
+Modal::begin([
+    'header' => '<h4>Criar Conta</h4>',
+    'id' => 'register',
+    'options' => ['tabindex' => 0]
+]);
+    $model = new User();
+    echo $this->render('signup', [
+        'model' => $model,
+    ]);
 Modal::end();
 ?>

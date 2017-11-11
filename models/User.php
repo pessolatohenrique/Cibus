@@ -5,8 +5,9 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use app\behaviors\FormatFieldsBehavior;
 /**
- * User model
+ * This is the model class for table "user".
  *
  * @property integer $id
  * @property string $username
@@ -17,12 +18,25 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password write-only password
+ * @property string $password
+ * @property string $photo
+ * @property string $nome_completo
+ * @property string $data_nascimento
+ * @property string $sexo
+ * @property double $altura
+ * @property double $peso
+ * @property string $nivelAtividade
+ * @property integer $aceitaTermos
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const COD_SEDENTARIO = 0;
+    const COD_LEVE = 1;
+    const COD_MODERADO = 2;
+    const COD_INTENSO = 3;
+
     public $password_repeat;
     /**
      * @inheritdoc
@@ -38,6 +52,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::className(),
+            FormatFieldsBehavior::className()
         ];
     }
     /**
@@ -46,6 +61,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['status', 'created_at', 'updated_at', 'aceitaTermos'], 'integer'],
+            [['data_nascimento'], 'safe'],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'auth_key', 'password', 'photo', 'nome_completo', 'altura', 'peso'], 'string', 'max' => 255],
+            [['sexo', 'nivelAtividade'], 'string', 'max' => 1],
             ['username', 'trim'],
             ['username', 'required','message' => 'O campo usuário é de preenchimento obrigatório'],
             ['username', 'unique', 'targetClass' => 'app\models\User', 'message' => 'Este usuário já existe em nossa base de dados'],
@@ -59,6 +78,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['password', 'string', 'min' => 4],
             ['password_repeat', 'required', 'message' => 'A confirmação da senha não pode ficar em branco'],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"A confirmação da senha deve ser igual a senha informada" ],
+            ['data_nascimento', 'required', 'message' => 'O campo data de nascimento é de preenchimento obrigatório'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
@@ -71,7 +91,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'username' => 'Usuário',
-            'password' => 'Senha'
+            'password' => 'Senha',
+            'nome_completo' => 'Nome Completo',
+            'data_nascimento' => 'Data Nascimento',
+            'sexo' => 'Sexo',
+            'altura' => 'Altura',
+            'peso' => 'Peso',
+            'nivelAtividade' => 'Nivel Atividade',
+            'aceitaTermos' => 'Aceita Termos',
+            'password_repeat' => 'Confirme a senha'
         ];
     }
     /**
@@ -189,5 +217,20 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Signs user up.
+     *
+     * @return User|null the saved model or null if saving fails
+     */
+    public function signup()
+    {
+        if (!$this->validate()) {
+            return null;
+        }
+        $this->setPassword($this->password);
+        $this->generateAuthKey();
+        return $this->save(false) ? $this : null;
     }
 }

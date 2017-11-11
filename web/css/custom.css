@@ -1,0 +1,79 @@
+/**
+ * customizações de reescrita do bootstrap
+ */
+body{
+	font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial,sans-serif;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.form-control{
+	border-radius: initial;
+	font-weight: normal;
+}
+
+.btn-primary{
+	background-color: #2dbe60;
+    border-color: #3CB371;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:visited{
+	background: #0d9f40;
+	border-color: #3CB371;
+	transition: .1s background ease-in-out;
+}
+
+.btn{
+	padding: 8px 14px;
+}
+
+.btn-outline-info {
+    color: #5bc0de;
+    background-image: none;
+    background-color: transparent;
+    border-color: #5bc0de;
+}
+
+a, a:visited, a:hover{
+	color: #0d9f40;
+	text-decoration: none;
+}
+
+/**
+ * customizações específicas
+ */
+.login-box{
+	max-width: 50%;	
+	margin: 0 auto 8em auto;
+    border: 1px solid #dedede;
+    padding: 2.3em 2em 1.3em 2em;
+    background-color: #ffffff;
+}
+
+.header-login{
+	margin-top: 5em;
+	margin-bottom: 1.9em;
+	color: #696969;
+}
+
+.wrap{
+	background-color: #f3f3f3;
+	/*background-image: url("../uploads/frutas2.jpg");
+	background-repeat: no-repeat;*/
+}
+
+.checkbox-space{
+    padding-left: 2.5em;
+}
+
+/**
+ * configurações do smart-phone
+ */
+@media(max-width: 576px) {
+	.login-box{
+		max-width: 95%;
+	}
+}

@@ -96,6 +96,10 @@ a.desc:after {
     border: none;
 }
 
+/**
+ * visualizacao smartphone
+ * @param max-width:767px 
+ */
 @media(max-width:767px) {
     .nav li > form > button.logout {
         display:block;
