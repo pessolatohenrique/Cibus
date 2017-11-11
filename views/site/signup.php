@@ -11,8 +11,12 @@ use kartik\select2\Select2;
     <p>Preencha os campos abaixo para realizar o cadastro no sistema.</p>
     <?php $form = ActiveForm::begin([
         'id' => 'form-signup',
-         'action' => ['signup']
+        'action' => ['signup'],
+        'options' => ['enctype' => 'multipart/form-data']
     ]); ?>
+
+    <?= $form->field($model_upload, 'imageFile')->fileInput()->label("Foto de Perfil") ?>
+    
     <div class="row">
         <div class="col-md-12">
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>

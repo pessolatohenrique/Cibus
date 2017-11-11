@@ -13,6 +13,7 @@ use app\models\User;
 use app\models\SignupForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
+use app\models\UploadUser;
 
 class SiteController extends Controller
 {
@@ -103,11 +104,13 @@ class SiteController extends Controller
             return $this->goHome();
         }
         $model = new LoginForm();
+        $model_upload = new UploadUser();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
             return $this->render('login', [
                 'model' => $model,
+                'model_upload' => $model_upload
             ]);
         }
     }
@@ -132,16 +135,23 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new User();
+        $model_upload = new UploadUser();
+
         if ($model->load(Yii::$app->request->post())) {
             $model->role = "user";
+            $image_profile = $model_upload->sendUpload();
+            $model->photo = $image_profile;
+            
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
             }
         }
+
         return $this->render('signup', [
             'model' => $model,
+            'model_upload' => $model_upload
         ]);
     }
 

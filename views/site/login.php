@@ -76,6 +76,7 @@ Modal::begin([
     $model = new User();
     echo $this->render('signup', [
         'model' => $model,
+        'model_upload' => $model_upload
     ]);
 Modal::end();
 ?>
