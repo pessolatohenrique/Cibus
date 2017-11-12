@@ -96,6 +96,12 @@ a.desc:after {
     border: none;
 }
 
+.img-small{
+    width: 16%;
+    padding-left: 1em;
+    padding-bottom: 1em;
+}
+
 /**
  * visualizacao smartphone
  * @param max-width:767px 

@@ -8,9 +8,9 @@ return [
     	'F' => 'Feminino' 
     ],
     'nivelAtividade' => [
-    	'sedentário',
-    	'leve',
-    	'moderado',
-    	'intenso'
+    	0 => 'sedentário',
+    	1 => 'leve',
+    	2 => 'moderado',
+    	3 => 'intenso'
     ]
 ];
