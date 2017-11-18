@@ -22,6 +22,7 @@ UserAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<?=$this->render('navbar')?>
 <div class="wrap">
     <div class="container" style="padding:0;">
         <?= Breadcrumbs::widget([
@@ -31,9 +32,7 @@ UserAsset::register($this);
     </div>
 </div>
 
-<footer class="footer-main">
-
-</footer>
+<?=$this->render('footer')?>
 
 <?php $this->endBody() ?>
 </body>

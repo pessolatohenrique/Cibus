@@ -69,11 +69,80 @@ a, a:visited, a:hover{
     padding-left: 2.5em;
 }
 
+.profile-image{
+	max-width: 50px !important;
+	border-radius: 50%;
+	margin-right: 0.5em;
+}
+
+.navbar-default{
+	height: 65px;
+	background-color: #4db6ac;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+	background-color: #4db6ac;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+	background-color: white;
+}
+
+.navbar-right{
+	margin-top: -0.6em;
+}
+
+.navbar-align, .navbar-header{
+	padding-top: 0.5em;
+}
+
+.navbar-brand{
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:visited
+{
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-default .navbar-nav > li > a{
+	text-transform: uppercase;
+}
+
+.navbar-default .navbar-nav > li > a:hover{
+	font-size: 1.1em;
+}
+
+.full-dropdown{
+	width: 100%;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+	background-color: transparent;
+}
+
+.option-mobile{
+	display: none !important;
+}
+
 /**
  * configurações do smart-phone
  */
 @media(max-width: 576px) {
 	.login-box{
 		max-width: 95%;
+	}
+
+	.navbar-right{
+		display: none;
+	}
+
+	.option-mobile{
+		display: block !important;
 	}
 }
