@@ -5,7 +5,7 @@ $isVisitor = Yii::$app->user->isGuest;
 $foto_perfil = !$isVisitor?Yii::$app->user->identity->photo:"";
 if(!$isVisitor):
 ?>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse_id">
@@ -13,10 +13,19 @@ if(!$isVisitor):
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>                        
                 </button>
-                <a class="navbar-brand" href="#"><?=Yii::$app->name?></a>
+                <?= Html::a(
+                    Yii::$app->name,
+                    ['/site/logout'],
+                    ['class' => 'navbar-brand']
+                ) ?>
             </div>
             <ul class="nav navbar-nav navbar-align collapse navbar-collapse" id="collapse_id">
-                <li class=""><a href="#">Home</a></li>
+                <li class="">
+                    <?= Html::a(
+                        'Home',
+                        ['/site']
+                    ) ?>
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
                     <span class="caret"></span></a>
@@ -44,7 +53,12 @@ if(!$isVisitor):
                         <?=Yii::$app->user->identity->username?>
                     </a>
                     <ul class="dropdown-menu full-dropdown">
-                        <li><a href="#">Configurações</a></li>
+                        <li>                            
+                            <?= Html::a(
+                                'Configurações',
+                                ['/user/update', 'id' => Yii::$app->user->identity->id]
+                            ) ?>    
+                        </li>
                         <li>
                             <?= Html::a(
                                 'Logout',
