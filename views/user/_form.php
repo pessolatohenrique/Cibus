@@ -81,7 +81,7 @@ $model->peso = number_format($model->peso,2);
         </div>
 
     <div class="form-group">
-        <?= Html::submitButton('Atualizar', ['class' =>'btn btn-primary']) ?>
+        <?= Html::submitButton('Atualizar', ['class' =>'btn btn-primary btn-align']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

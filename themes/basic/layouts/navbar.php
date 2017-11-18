@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\bootstrap\NavBar;
+use yii\bootstrap\Nav;
 $isVisitor = Yii::$app->user->isGuest;
 $foto_perfil = !$isVisitor?Yii::$app->user->identity->photo:"";
 if(!$isVisitor):
@@ -15,7 +17,7 @@ if(!$isVisitor):
                 </button>
                 <?= Html::a(
                     Yii::$app->name,
-                    ['/site/logout'],
+                    ['/site'],
                     ['class' => 'navbar-brand']
                 ) ?>
             </div>

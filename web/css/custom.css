@@ -27,7 +27,10 @@ html, body {
 }
 
 .btn{
-	padding: 8px 14px;
+	padding: 8px 14px;	
+}
+
+.btn-align{
 	margin-left: 1em;
 }
 
@@ -66,6 +69,10 @@ a, a:visited, a:hover{
 
 	/*background-image: url("../uploads/frutas2.jpg");
 	background-repeat: no-repeat;*/
+}
+
+.full-page{
+	background-color: #ecf0f5;
 }
 
 .checkbox-space{
