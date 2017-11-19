@@ -7,7 +7,7 @@ $isVisitor = Yii::$app->user->isGuest;
 $foto_perfil = !$isVisitor?Yii::$app->user->identity->photo:"";
 if(!$isVisitor):
 ?>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-nav navbar-default navbar-fixed-top" id="w0">
         <div class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse_id">

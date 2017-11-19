@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\UserAsset;
+
 UserAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -20,7 +21,7 @@ UserAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?=$this->render('navbar')?>
+<?=$this->render('navbar_widget') ?>
 <div class="wrap">
     <div class="container" style="padding:0;">
         <?= Breadcrumbs::widget([

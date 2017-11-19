@@ -103,6 +103,11 @@ a, a:visited, a:hover{
 	margin-top: -0.6em;
 }
 
+.option-right{
+    height: 40px;
+    margin-top: -0.5em;
+}
+
 .navbar-align, .navbar-header{
 	padding-top: 0.5em;
 }
@@ -129,7 +134,7 @@ a, a:visited, a:hover{
 	font-size: 1.1em;
 }
 
-.full-dropdown{
+.dropdown-menu{
 	width: 100%;
 }
 
@@ -170,5 +175,19 @@ a, a:visited, a:hover{
 
 	.option-mobile{
 		display: block !important;
+	}
+
+	.pull-right{
+		display: none;
+	}
+
+	.navbar-header{
+		padding-left: 1em;
+		padding-right: 1em;
+	}
+
+	.navbar-nav{
+		margin-top: 0;
+		padding-left: 0.5em;
 	}
 }
