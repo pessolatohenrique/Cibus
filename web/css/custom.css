@@ -157,8 +157,17 @@ a, a:visited, a:hover{
     margin-top: 4em;
     padding-top: 1.5em !important;
 }
+
 .container h1{
 	padding-left: 0.5em;
+}
+
+.box-border{
+    border-top: 3px solid #d2d6de;
+}
+
+.box-success{
+	border-top-color: #00a65a;
 }
 
 /**

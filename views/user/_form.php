@@ -10,7 +10,7 @@ $model->data_nascimento = DateHelper::toBrazilian($model->data_nascimento);
 $model->peso = number_format($model->peso,2);
 ?>
 
-<div class="user-form box">
+<div class="user-form box box-border box-success">
 
     <?php $form = ActiveForm::begin(); ?>
 
