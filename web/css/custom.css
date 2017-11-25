@@ -147,10 +147,13 @@ a, a:visited, a:hover{
 }
 
 .box{
-    margin: 0 auto 8em auto;
+    margin: 0 auto 2em auto;
     border: 1px solid #dedede;
     padding: 2.3em 2em 1.3em 2em;
     background-color: #ffffff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
 .container{
@@ -168,6 +171,33 @@ a, a:visited, a:hover{
 
 .box-success{
 	border-top-color: #00a65a;
+}
+
+.box-theme{
+	background-color: #77D2C8;
+    padding-top: 2.8em;
+    padding-bottom: 3.8em;
+}
+
+.text-white{
+	color: white;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.info-text{
+	font-size: 2.5em;
+	display: block;
+	padding-top: 0.5em;
+}
+
+.info-longtext{
+	font-size: 2.2em;
+	display: block;
+	padding-top: 0.76em;
+}
+.margin-row{
+	margin-top: 1em;
 }
 
 /**
@@ -198,5 +228,10 @@ a, a:visited, a:hover{
 	.navbar-nav{
 		margin-top: 0;
 		padding-left: 0.5em;
+	}
+
+	.box-theme{
+	    padding-top: 2.3em;
+    	padding-bottom: 1.3em;
 	}
 }
