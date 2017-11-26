@@ -6,6 +6,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use app\behaviors\FormatFieldsBehavior;
+
 /**
  * This is the model class for table "user".
  *
@@ -38,6 +39,14 @@ class User extends ActiveRecord implements IdentityInterface
     const COD_INTENSO = 3;
 
     public $password_repeat;
+    //atributos calculados
+    public $imc;
+    public $classificacao_imc;
+    public $caf;
+    public $eer;
+    public $idade;
+    public $tmb;
+    public $valor_dieta;
     /**
      * @inheritdoc
      */
@@ -55,6 +64,7 @@ class User extends ActiveRecord implements IdentityInterface
             FormatFieldsBehavior::className()
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -102,6 +112,7 @@ class User extends ActiveRecord implements IdentityInterface
             'password_repeat' => 'Confirme a senha'
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -233,4 +244,65 @@ class User extends ActiveRecord implements IdentityInterface
         $this->generateAuthKey();
         return $this->save(false) ? $this : null;
     }
+
+    public function classificaImc()
+    {
+        if ($this->imc < 16){
+            $this->classificacao_imc = "Desnutrição grau 3";
+        }elseif($this->imc >= 16 && $this->imc <= 17.9){
+            $this->classificacao_imc = "Desnutrição grau 2";
+        }elseif($this->imc >= 18 && $this->imc <= 18.4){
+            $this->classificacao_imc = "Desnutrição grau 1";
+        }elseif($this->imc >= 18.5 && $this->imc <= 24.9){
+            $this->classificacao_imc = "Eutrofia";
+        }elseif($this->imc >= 25 && $this->imc <= 29.9){
+            $this->classificacao_imc = "Sobrepeso";
+        }elseif($this->imc >= 30 && $this->imc <= 34.9){
+            $this->classificacao_imc = "Obesidade grau 1";
+        }elseif($this->imc >= 35 && $this->imc <= 39.9){
+            $this->classificacao_imc = "Obesidade grau 2";
+        }else{
+            $this->classificacao_imc = "Obesidade grau 3";
+        }
+    }
+
+    /**
+     * realiza o cálculo do índice de massa corporal (IMC)
+     * para um usuário específico
+     * @return void
+     */
+    public function calculaImc()
+    {
+        $total_imc = $this->peso / ($this->altura * $this->altura);
+        $this->imc = $total_imc;
+    }
+
+    /**
+     * calcula a idade do usuário em anos
+     * @return void
+     */
+    public function calculaIdade()
+    {
+        $data1 = new \DateTime(date("Y-m-d"));
+        $data2 = new \DateTime($this->data_nascimento);
+        $intervalo = $data1->diff( $data2 );
+        $this->idade = $intervalo->y;
+    }
+
+    /**
+     * seleciona o valor de dieta do usuário
+     * valor selecionado de acordo com o eer
+     * @return void
+     */
+    public function selecionaDieta()
+    {
+        if($this->eer <= 1900){
+            $this->valor_dieta = 1900;
+        }elseif($this->eer > 1900 && $this->eer <= 2500){
+            $this->valor_dieta = 2500;
+        }else{
+            $this->valor_dieta = 2800;
+        }
+    }
+
 }

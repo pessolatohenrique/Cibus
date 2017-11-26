@@ -15,4 +15,15 @@ class FormatterHelper
 		$format_value = str_replace(",", ".", $value);
 		return $format_value;
 	}
+
+	/**
+	 * converte um número do banco de dados para o formato brasileiro
+	 * exemplo: 62.50 será 62,50
+	 * @param String $value valor a ser formatado 
+	 * @return String $format_value
+	 */
+	public function formatBrazilian($value)
+	{
+		return number_format($value, 2, ",", ".");
+	}
 }

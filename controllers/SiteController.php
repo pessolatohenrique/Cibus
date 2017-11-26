@@ -14,6 +14,7 @@ use app\models\SignupForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\UploadUser;
+use app\models\UsuarioFactory;
 
 class SiteController extends Controller
 {
@@ -87,7 +88,12 @@ class SiteController extends Controller
         if(Yii::$app->user->isGuest){
             return $this->redirect(['site/login']);
         }else{
-            return $this->render('index');
+            $factory = new UsuarioFactory();
+            $objeto_criado = $factory->createUser(Yii::$app->user->identity->sexo);
+            $model = $objeto_criado->find()->where(['id' => Yii::$app->user->identity->id])->one();
+            return $this->render('index',[
+                'model' => $model
+            ]);
         }
         
         
