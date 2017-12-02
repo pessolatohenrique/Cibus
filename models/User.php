@@ -6,6 +6,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use app\behaviors\FormatFieldsBehavior;
+use app\behaviors\InsertHistoryBehavior;
 
 /**
  * This is the model class for table "user".
@@ -61,7 +62,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::className(),
-            FormatFieldsBehavior::className()
+            FormatFieldsBehavior::className(),
+            InsertHistoryBehavior::className()
         ];
     }
 

@@ -28,4 +28,19 @@ class DateHelper
 		$date_brazilian = $date_explode[2]."/".$date_explode[1]."/".$date_explode[0];
 		return $date_brazilian;
 	}
+
+	/**
+	 * gera uma data passada a partir de um número de dias e de uma data
+	 * @param Integer $days número de dias a ser subtraído 
+	 * @param  Date $forward_date data a ser substraída
+	 * @return Date $past_date data passada, de acordo com o cálculo
+	 */
+	public function calculatePast($days, $forward_date)
+	{
+		$substract = "- {$days} days";
+		$forward_date = strtotime($forward_date);
+        $past_date = strtotime($substract, $forward_date);
+        $past_date = date("Y-m-d", $past_date);
+        return $past_date;
+	}
 }

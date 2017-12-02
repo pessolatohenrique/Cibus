@@ -209,6 +209,11 @@ a, a:visited, a:hover{
 	margin-top: 1em;
 }
 
+p.pesquisa-invalida{
+    text-align: center;
+    font-size: 1.5em;
+}
+
 /**
  * configurações do smart-phone
  */

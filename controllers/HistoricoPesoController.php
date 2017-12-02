@@ -1,36 +1,44 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace app\controllers;
 
 use Yii;
-use app\models\User;
-use app\models\UserSearch;
+use app\models\HistoricoPeso;
+use app\models\HistoricoPesoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use yii\data\ArrayDataProvider;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * HistoricoPesoController implements the CRUD actions for HistoricoPeso model.
  */
-class UserController extends Controller
+class HistoricoPesoController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            $theme = "basic";
+            if (Yii::$app->request->cookies['theme']) {
+                $theme = Yii::$app->request->cookies->getValue('theme');
+            }
+            Yii::$app->view->theme = new \yii\base\Theme([
+                'pathMap' => ['@app/views' => '@app/themes/'.$theme],
+                'baseUrl' => '@web',
+
+            ]);
+            return true;  // or false if needed
+        } else {
+            return false;
+        }
+    }
+
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'view'],
-                        'roles' => ['manageUsers'],
-                    ],
-                ]
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -41,22 +49,28 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all HistoricoPeso models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new HistoricoPesoSearch();
+        $result = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $result
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'datas_lancamento' => array_column($result, "data_lancamento"),
+            'pesos' => HistoricoPeso::obtemPesos($result)
         ]);
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single HistoricoPeso model.
      * @param integer $id
      * @return mixed
      */
@@ -68,13 +82,13 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new HistoricoPeso model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new HistoricoPeso();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -86,7 +100,7 @@ class UserController extends Controller
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing HistoricoPeso model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,7 +119,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing HistoricoPeso model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,15 +132,15 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the HistoricoPeso model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return HistoricoPeso the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = HistoricoPeso::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
