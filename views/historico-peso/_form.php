@@ -2,24 +2,33 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\HistoricoPeso */
-/* @var $form yii\widgets\ActiveForm */
+$model->data_lancamento = date("d/m/Y");
 ?>
 
 <div class="historico-peso-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'form-historico',
+        'action' => ['create']    
+	]); ?>
 
-    <?= $form->field($model, 'usuario_id')->textInput() ?>
-
-    <?= $form->field($model, 'data_lancamento')->textInput() ?>
-
-    <?= $form->field($model, 'peso')->textInput(['maxlength' => true]) ?>
-
+    <div class="row">
+    	<div class="col-md-6">
+		    <?= $form->field($model, 'data_lancamento')->widget(MaskedInput::className(), [
+        		'mask' => '99/99/9999',
+    		]) ?>
+    	</div>
+    	<div class="col-md-6">
+    		<?= $form->field($model, 'peso')->textInput([
+    			'class' => 'form-control number-decimal'
+    		]) ?>
+    	</div>
+    </div>
+    
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Adicionar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

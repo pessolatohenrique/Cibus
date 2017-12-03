@@ -15,10 +15,10 @@ $this->params['breadcrumbs'][] = "Relatório de Peso e IMC";
     <div class="box box-border box-success">
         <div class="box-body">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4 col-sm-5">
                      <?=$this->render('_search', ['model' => $searchModel]); ?>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8 col-sm-7">
                     <?php 
                     if(!empty($datas_lancamento)):
                     ?>
@@ -38,26 +38,23 @@ $this->params['breadcrumbs'][] = "Relatório de Peso e IMC";
                     ?>
                 </div>
             </div>
+            <section class="tabela-peso">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <?= $this->render('tabela_peso', [
+                            'dataProvider' => $dataProvider
+                        ]); ?>
 
-            <div class="row">
-                
-            </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <?= $this->render('tabela_imc', [
+                            'dataProvider' => $dataProvider
+                        ]); ?>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </div>
-   
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'usuario_id',
-            'data_lancamento',
-            'peso',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
 </section>

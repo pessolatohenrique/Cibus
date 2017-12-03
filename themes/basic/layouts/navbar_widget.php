@@ -42,11 +42,6 @@ if(!$isVisitor):
 	        	'options' => ['class' => 'navbar-align'],
 	        ],
 	        [
-	        	'label' => 'Page 2', 
-	        	'url' => ['#'],
-	        	'options' => ['class' => 'navbar-align'],
-	        ],
-	        [
 	        	'label' => 'Relatórios', 
 	        	'items' => [
 	        		['label' => 'Peso e IMC', 'url' => ['../historico-peso']],

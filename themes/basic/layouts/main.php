@@ -24,7 +24,7 @@ UserAsset::register($this);
 <?php $this->beginBody() ?>
 <?=$this->render('navbar_widget') ?>
 <div class="wrap">
-    <div class="container" style="padding:0;">
+    <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

@@ -214,6 +214,26 @@ p.pesquisa-invalida{
     font-size: 1.5em;
 }
 
+.tabela-peso{
+	margin-top: 2em;
+}
+
+.badge{
+    border-radius: 2px;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-weight: 300;
+    font-size: 1em;
+    color: #fff;
+}
+.positive-badge{
+    background-color: #26a69a;
+}
+
+.negative-badge{
+	background-color: #c62828;
+}
+
 /**
  * configurações do smart-phone
  */

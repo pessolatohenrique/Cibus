@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
+use yii\bootstrap\Modal;
 use app\components\DateHelper;
+use app\models\HistoricoPeso;
 
 if(strpos($model->data_inicial, "-") > 0){
     $model->data_inicial = DateHelper::toBrazilian($model->data_inicial);
@@ -33,8 +35,28 @@ if(strpos($model->data_final, "-") > 0){
 
     <div class="form-group">
         <?= Html::submitButton('Pesquisar', ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Adicionar Histórico',['historico-peso/create13'],
+            [
+                'class' => 'btn btn-info',
+                'data-toggle' => 'modal',
+                'data-target' => "#modal_historico"
+            ]
+       )?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+Modal::begin([
+    'header' => '<h5>Adicionar Histórico</h5>',
+    'options' => ['id' => 'modal_historico']
+]);
+
+$model_historico = new HistoricoPeso();
+echo $this->renderAjax('create', [
+    'model' => $model_historico,
+]);
+
+Modal::end();

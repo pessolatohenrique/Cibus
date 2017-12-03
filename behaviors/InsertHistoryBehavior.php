@@ -23,10 +23,14 @@ class InsertHistoryBehavior extends Behavior
     {
         date_default_timezone_set('America/Sao_Paulo');
        	$model = $this->owner;
-        $historico = new HistoricoPeso();
-        $historico->usuario_id = $model->id;
-        $historico->data_lancamento = date("Y-m-d");
-        $historico->peso = $model->peso;
-        $historico->save();
+
+        if ($model->scenario != "noInsert") {
+            $historico = new HistoricoPeso();
+            $historico->usuario_id = $model->id;
+            $historico->data_lancamento = date("Y-m-d");
+            $historico->peso = $model->peso;
+            $historico->save();
+        }
+
     }
 }

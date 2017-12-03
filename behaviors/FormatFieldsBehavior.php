@@ -21,7 +21,11 @@ class FormatFieldsBehavior extends Behavior
     {
     	$formatter = Yii::$app->formatter;
        	$model = $this->owner;
-       	$model->data_nascimento = DateHelper::toAmerican($model->data_nascimento);
+
+        if (strpos($model->data_nascimento, "/") > 0){
+          $model->data_nascimento = DateHelper::toAmerican($model->data_nascimento);
+        }
+       	
        	$model->peso = FormatterHelper::formatDecimal($model->peso);
        	$model->altura = FormatterHelper::formatDecimal($model->altura);
     }

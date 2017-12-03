@@ -66,7 +66,15 @@ class HistoricoPesoSearch extends HistoricoPeso
 
 
         $query->orderBy("data_lancamento", "ASC");
-        return $query->all();
+        $pesos = $query->all();
+
+        if(!empty($pesos)){
+            $pesos = HistoricoPeso::calculaDiferenca($pesos);
+            $pesos = HistoricoPeso::calculaImcLote($pesos);
+            $pesos = HistoricoPeso::calculaDiferencaImc($pesos);
+        }
+
+        return $pesos;
     }
 
     /**

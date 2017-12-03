@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\HistoricoPeso;
 use app\models\HistoricoPesoSearch;
 use yii\web\Controller;
@@ -39,6 +40,16 @@ class HistoricoPesoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'view'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -91,7 +102,7 @@ class HistoricoPesoController extends Controller
         $model = new HistoricoPeso();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
