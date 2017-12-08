@@ -8,7 +8,7 @@ use Yii;
  */
 class ImageHelper
 {
-	public function generateName($original_name)
+	public static function generateName($original_name)
 	{
 		$datetime = date("Ymdhis");
 		$name = $datetime.$original_name;

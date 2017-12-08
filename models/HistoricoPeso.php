@@ -113,7 +113,7 @@ class HistoricoPeso extends \yii\db\ActiveRecord
      * @param Array $resultados resultados encontrados na tabela historico_peso 
      * @return Array $pesos array com pesos encontrados e convertidos em float
      */
-    public function obtemPesos($resultados)
+    public static function obtemPesos($resultados)
     {
         $pesos = array_column($resultados, "peso");
 

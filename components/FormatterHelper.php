@@ -9,7 +9,7 @@ class FormatterHelper
 	 * @param String $value valor a ser formatado 
 	 * @return String $format_value
 	 */
-	public function formatDecimal($value)
+	public static function formatDecimal($value)
 	{
 		$format_value = str_replace(".", "", $value);
 		$format_value = str_replace(",", ".", $value);
@@ -22,7 +22,7 @@ class FormatterHelper
 	 * @param String $value valor a ser formatado 
 	 * @return String $format_value
 	 */
-	public function formatBrazilian($value)
+	public static function formatBrazilian($value)
 	{
 		return number_format($value, 2, ",", ".");
 	}

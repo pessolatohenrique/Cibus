@@ -9,7 +9,7 @@ class StyleHelper
 	 * @param Float $valor valor fornecido por uma consulta ou algo semelhante
 	 * @return $estilo classe CSS a ser aplicada
 	 */
-	public function getBadge($valor)
+	public static function getBadge($valor)
 	{
 		$estilo = "badge negative-badge";
 		if ($valor >= 0) {
