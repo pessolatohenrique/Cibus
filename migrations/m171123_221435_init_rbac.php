@@ -16,16 +16,10 @@ class m171123_221435_init_rbac extends Migration
         $manageUsers->description = 'Gerenciar usuários';
         $auth->add($manageUsers);
 
-        // add "food group" permission
-        $manageFoodGroup = $auth->createPermission('manageFoodGroup');
-        $manageFoodGroup->description = 'Gerenciar grupo de alimentos';
-        $auth->add($manageFoodGroup);
-
         // add "admin" role and give this role the "manageUsers" permission
         $admin = $auth->createRole('admin');
         $auth->add($admin);
         $auth->addChild($admin, $manageUsers);
-        $auth->addChild($admin, $manageFoodGroup);
 
         $auth->assign($admin, 1);
     }
