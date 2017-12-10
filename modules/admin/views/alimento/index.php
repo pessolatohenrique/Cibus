@@ -7,7 +7,10 @@ $this->title = 'Alimentos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alimento-index">
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', [
+        'model' => $searchModel,
+        'grupos' => $grupos
+    ]); ?>
 
     <div class="box">
         <div class="box-body">

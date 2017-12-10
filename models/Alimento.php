@@ -46,7 +46,7 @@ class Alimento extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'grupo_id' => 'Grupo ID',
+            'grupo_id' => 'Grupo Alimentar',
             'descricao' => 'Descrição',
             'medida_caseira' => 'Medida Caseira',
             'calorias' => 'Calorias',

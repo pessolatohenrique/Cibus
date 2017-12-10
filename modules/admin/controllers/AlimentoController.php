@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Alimento;
 use app\models\AlimentoSearch;
+use app\models\GrupoAlimentar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,6 +42,7 @@ class AlimentoController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'grupos' => GrupoAlimentar::find()->orderBy("descricao","ASC")->all()
         ]);
     }
 
@@ -66,10 +68,11 @@ class AlimentoController extends Controller
         $model = new Alimento();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'grupos' => GrupoAlimentar::find()->orderBy("descricao","ASC")->all()
             ]);
         }
     }
@@ -85,10 +88,11 @@ class AlimentoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'grupos' => GrupoAlimentar::find()->orderBy("descricao","ASC")->all()
             ]);
         }
     }

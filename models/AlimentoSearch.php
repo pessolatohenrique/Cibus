@@ -47,7 +47,13 @@ class AlimentoSearch extends Alimento
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
+        ]);
+
+         $dataProvider->setSort([
+            'defaultOrder' => [
+                'descricao' => SORT_ASC
+            ]
         ]);
 
         $this->load($params);

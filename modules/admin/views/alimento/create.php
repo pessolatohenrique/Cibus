@@ -2,20 +2,15 @@
 
 use yii\helpers\Html;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Alimento */
-
-$this->title = 'Create Alimento';
+$this->title = 'Novo Alimento';
 $this->params['breadcrumbs'][] = ['label' => 'Alimentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alimento-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'grupos' => $grupos
     ]) ?>
 
 </div>
