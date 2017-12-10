@@ -25,6 +25,7 @@ $foto_perfil = Yii::$app->user->identity->photo;
                     ['label' => 'Administrador', 'options' => ['class' => 'header']],
                     ['label' => 'Usuários', 'icon' => 'users', 'url' => ['/admin/user']],
                     ['label' => 'Grupos Alimentares', 'icon' => 'users', 'url' => ['/admin/grupo-alimentar']],
+                    ['label' => 'Alimentos', 'icon' => 'users', 'url' => ['/admin/alimento']],
                 ],
             ]
         ) ?>
