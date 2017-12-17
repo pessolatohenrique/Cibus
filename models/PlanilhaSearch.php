@@ -44,6 +44,7 @@ class PlanilhaSearch extends Planilha
         $query = Planilha::find();
 
         // add conditions that should always apply here
+        $query->andFilterWhere(['user_id' => Yii::$app->user->identity->id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

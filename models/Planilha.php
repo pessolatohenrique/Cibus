@@ -76,6 +76,18 @@ class Planilha extends \yii\db\ActiveRecord
     }
 
     /**
+     * behavior do framework
+     * o objetivo é formatar os dados após a busca em banco de dados
+     * exemplos de uso: formatação de datas, valores decimais, entre outros
+     * @return mixed
+     */
+    public function afterFind()
+    {
+        $this->created_at = date("d/m/Y", $this->created_at);
+        return parent::afterFind();
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getUser()

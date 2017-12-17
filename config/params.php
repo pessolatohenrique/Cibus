@@ -1,4 +1,5 @@
 <?php
+
 return [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@example.com',
@@ -12,5 +13,6 @@ return [
     	1 => 'leve',
     	2 => 'moderado',
     	3 => 'intenso'
-    ]
+    ],
+    'planilhas_path' => '/planilhas'
 ];

@@ -6,9 +6,11 @@ use Yii;
 use app\models\Planilha;
 use app\models\PlanilhaSearch;
 use app\models\PlanilhaUpload;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\BaseUrl;
 
 /**
  * PlanilhaController implements the CRUD actions for Planilha model.
@@ -21,6 +23,16 @@ class PlanilhaController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'roles' => ['manageSheet'],
+                    ],
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -52,9 +64,12 @@ class PlanilhaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+        $url_planilha = BaseUrl::home();
+        $url_planilha .= $model->arquivo;
+        
+        return $this->redirect($url_planilha);
+
     }
 
     /**
