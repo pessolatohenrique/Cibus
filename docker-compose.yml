@@ -1,0 +1,31 @@
+version: '3'
+services:
+    php:
+        build:
+            dockerfile: ./docker/php.dockerfile
+            context: .
+        image: php
+        container_name: meu_php
+        ports: 
+            - "80:80"
+        networks:
+            - development-network
+        volumes:
+            - /c/xampp/htdocs/Projetos/Cibus:/var/www/html
+        depends_on: 
+            - "mysql"
+
+    mysql:
+        image: mysql
+        container_name: meu_sql
+        networks:
+            - development-network
+        environment:
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: admin
+        volumes:
+            - var/lib/mysql
+
+networks:
+    development-network:
+        driver: bridge

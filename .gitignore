@@ -32,3 +32,4 @@ tests/_support/_generated
 #upload path
 /web/uploads
 /web/assets/*
+.vscode/
