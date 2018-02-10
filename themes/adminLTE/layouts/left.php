@@ -27,6 +27,7 @@ $foto_perfil = Yii::$app->user->identity->photo;
                     ['label' => 'Grupos Alimentares', 'icon' => 'users', 'url' => ['/admin/grupo-alimentar']],
                     ['label' => 'Alimentos', 'icon' => 'users', 'url' => ['/admin/alimento']],
                     ['label' => 'Planilhas', 'icon' => 'users', 'url' => ['/admin/planilha']],
+                    ['label' => 'Refeições', 'icon' => 'users', 'url' => ['/admin/refeicao']],
 
                 ],
             ]
