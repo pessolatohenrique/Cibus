@@ -28,7 +28,7 @@ $foto_perfil = Yii::$app->user->identity->photo;
                     ['label' => 'Alimentos', 'icon' => 'users', 'url' => ['/admin/alimento']],
                     ['label' => 'Planilhas', 'icon' => 'users', 'url' => ['/admin/planilha']],
                     ['label' => 'Refeições', 'icon' => 'users', 'url' => ['/admin/refeicao']],
-
+                    ['label' => 'Dietas', 'icon' => 'users', 'url' => ['/admin/dieta']],
                 ],
             ]
         ) ?>
