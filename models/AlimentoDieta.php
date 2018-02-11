@@ -84,4 +84,13 @@ class AlimentoDieta extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Refeicao::className(), ['id' => 'refeicao_id']);
     }
+
+    /**
+     * obtem o concatenado entre a refeição e o alimento
+     * @return String $complete_description
+     */
+    public function getFullDescription()
+    {
+        return $this->refeicao->descricao." - ".$this->alimento->descricao;
+    }
 }

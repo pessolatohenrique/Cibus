@@ -49,4 +49,16 @@ class GrupoAlimentar extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    /**
+     * realiza a listagem dos campos "ID" e "Descricao" da tabela de grupos alimentares
+     * o objetivo é otimizar a busca
+     * @return Array $grupos grupos alimentares encontrados
+     */
+    public function listDescription()
+    {
+        $query = self::find()->orderBy('descricao', 'ASC');
+        $grupos = $query->all();
+        return $grupos;
+    }
 }

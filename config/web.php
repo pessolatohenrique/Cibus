@@ -13,6 +13,9 @@ $config = [
         'admin' => [
             'class' => 'app\modules\admin\Admin',
         ],
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ]
     ],
     'components' => [
         'authManager' => [

@@ -12,13 +12,14 @@ use app\models\AlimentoDieta;
  */
 class AlimentoDietaSearch extends AlimentoDieta
 {
+    public $grupo_pesquisa;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'alimento_id', 'dieta_id', 'refeicao_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'alimento_id', 'dieta_id', 'refeicao_id', 'grupo_pesquisa' ,'created_at', 'updated_at'], 'integer'],
             [['porcao'], 'number'],
         ];
     }
@@ -39,11 +40,13 @@ class AlimentoDietaSearch extends AlimentoDieta
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($dieta_id, $params)
     {
         $query = AlimentoDieta::find();
+        $query->joinWith('alimento');
 
         // add conditions that should always apply here
+        $query->andWhere(['dieta_id' => $dieta_id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -59,15 +62,12 @@ class AlimentoDietaSearch extends AlimentoDieta
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'alimento_id' => $this->alimento_id,
-            'dieta_id' => $this->dieta_id,
             'refeicao_id' => $this->refeicao_id,
-            'porcao' => $this->porcao,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            // 'grupo_pesquisa' => $this->grupo_pesquisa,
         ]);
-
+        $query->andFilterWhere(['alimentos.grupo_id' => $this->grupo_pesquisa]);
+        
         return $dataProvider;
     }
 }

@@ -14,7 +14,6 @@ function buscaInfoAlimento(action, params, elemento) {
             $(".medida_caseira_field").val(retorno.medida_caseira);
             $(".grupo_alimentar_field").val(retorno.grupo);
             showHideLoader();
-
         },
         "error": function(jqXHR, textStatus, errorThrown) {
             showAjaxError(elemento, jqXHR);
@@ -24,6 +23,13 @@ function buscaInfoAlimento(action, params, elemento) {
 }
 
 $(document).ready(function() {
+    var action = $(".cmb_alimento").data("action");
+    var params = {
+        "id": $(".cmb_alimento").val()
+    };
+    buscaInfoAlimento(action, params, "");
+    showHideLoader();
+
     $(".cmb_alimento").on("change", function(){
         var elemento = $(this);
         var action = elemento.data("action");

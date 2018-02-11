@@ -9,8 +9,10 @@ use app\models\Alimento;
 use app\models\Refeicao;
 use yii\filters\VerbFilter;
 use app\models\AlimentoDieta;
+use app\models\GrupoAlimentar;
 use yii\web\NotFoundHttpException;
 use app\models\AlimentoDietaSearch;
+use yii\filters\AccessControl;
 
 /**
  * AlimentoDietaController implements the CRUD actions for AlimentoDieta model.
@@ -23,6 +25,16 @@ class AlimentoDietaController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'roles' => ['manageDiet'],
+                    ],
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,12 +51,15 @@ class AlimentoDietaController extends Controller
     public function actionIndex($dieta_id)
     {
         $searchModel = new AlimentoDietaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($dieta_id, Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'dieta' => Dieta::find()->where(['id' => $dieta_id])->one()
+            'dieta' => Dieta::find()->where(['id' => $dieta_id])->one(),
+            'refeicoes' => Refeicao::listDescription(),
+            'alimentos' => Alimento::listDescription(),
+            'grupos_alimentares' => GrupoAlimentar::listDescription()
         ]);
     }
 
@@ -54,10 +69,11 @@ class AlimentoDietaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($dieta_id, $id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dieta' => Dieta::find()->where(['id' => $dieta_id])->one()
         ]);
     }
 
@@ -95,16 +111,25 @@ class AlimentoDietaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($dieta_id, $id)
     {
         $model = $this->findModel($id);
+        $dieta = Dieta::find()->where(['id' => $dieta_id])->one();
+        $post = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load($post) && $model->save()) {
+            if ($post['continua_insercao'] == 1) {
+                \Yii::$app->getSession()->setFlash('success', 'Alimento associado com sucesso!');
+                return $this->redirect(['create', 'dieta_id' => $dieta_id]);
+            } 
+            return $this->redirect(['index', 'dieta_id' => $dieta_id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'dieta' => $dieta,
+            'alimentos' => Alimento::listDescription(),
+            'refeicoes' => Refeicao::listDescription()
         ]);
     }
 
@@ -115,11 +140,11 @@ class AlimentoDietaController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($dieta_id, $id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'dieta_id' => $dieta_id]);
     }
 
     /**

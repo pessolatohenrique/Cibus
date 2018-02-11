@@ -6,35 +6,36 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\AlimentoDieta */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Alimento Dietas', 'url' => ['index']];
+$this->title = $model->fullDescription;
+$this->params['breadcrumbs'][] = ['label' => 'Dieta', 'url' => [
+    'index',
+    'dieta_id' => $dieta->id
+]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alimento-dieta-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'alimento_id',
-            'dieta_id',
-            'refeicao_id',
+            [
+                'attribute' => 'refeicao.descricao',
+                'label' => 'Refeição'
+            ],
+            [
+                'attribute' => 'alimento.descricao',
+                'label' => 'Alimento'    
+            ],
+            [
+                'attribute' => 'alimento.grupo.descricao',
+                'label' => 'Grupo Alimentar'
+            ],
             'porcao',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'alimento.medida_caseira',
+                'label' => 'Medida Caseira'
+            ],
+            'alimento.calorias'
         ],
     ]) ?>
 

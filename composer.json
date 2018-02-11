@@ -21,7 +21,9 @@
         "kartik-v/yii2-widget-select2": "@dev",
         "igorescobar/jquery-mask-plugin": "^1.14",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "2amigos/yii2-highcharts-widget" : "~1.0"
+        "2amigos/yii2-highcharts-widget" : "~1.0",
+        "kartik-v/yii2-grid": "@dev",
+        "kop/yii2-scroll-pager": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
