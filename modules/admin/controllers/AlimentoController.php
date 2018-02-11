@@ -3,13 +3,14 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
+use yii\helpers\Json;
+use yii\web\Controller;
 use app\models\Alimento;
+use yii\filters\VerbFilter;
 use app\models\AlimentoSearch;
 use app\models\GrupoAlimentar;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AlimentoController implements the CRUD actions for Alimento model.
@@ -27,7 +28,7 @@ class AlimentoController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'search'],
                         'roles' => ['manageFood'],
                     ],
                 ]
@@ -119,6 +120,27 @@ class AlimentoController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * realiza a busca de um alimento através de um ID
+     * o objetivo é trazer informações adicionais, tais como medida caseira e grupo alimentar
+     * @param Integer $id identificador do alimento
+     * @return void
+     */
+    public function actionSearch($id)
+    {
+        $alimento = Alimento::find()->where(['id' => $id])->one();
+        $retorno = array();
+        
+        if (count($alimento) > 0) {
+            $retorno = array(
+                'grupo' => $alimento->grupo->descricao,
+                'medida_caseira' => $alimento->medida_caseira
+            );
+        }
+        
+        echo Json::encode($retorno);
     }
 
     /**

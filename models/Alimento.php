@@ -60,4 +60,17 @@ class Alimento extends \yii\db\ActiveRecord
     {
         return $this->hasOne(GrupoAlimentar::className(), ['id' => 'grupo_id']);
     }
+
+    /**
+     * lista todos os valores dos campos "id" e "descricao" dos alimentos
+     * o objetivo de listar apenas este campo é otimizar a consulta SQL
+     *
+     * @return Array $foods lista de alimentos encontrados
+     */
+    public function listDescription()
+    {
+        $query = self::find()->select(['id','descricao'])->orderBy('descricao','ASC');
+        $foods = $query->all();
+        return $foods;
+    }
 }

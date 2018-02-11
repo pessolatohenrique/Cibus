@@ -62,6 +62,17 @@ class Refeicao extends \yii\db\ActiveRecord
     {
         $this->created_at = date("d/m/Y", $this->created_at);   
         $this->updated_at = date("d/m/Y", $this->updated_at);   
+    }
 
+    /**
+     * lista apenas os campos "id" e "descricao" das refeicoes
+     * o objetivo é otimizar o tempo de consulta
+     * @return Array $refeicoes lista de refeicoes encontradas
+     */
+    public static function listDescription()
+    {
+        $query = self::find()->select(['id', 'descricao'])->orderBy('id', 'ASC');
+        $refeicoes = $query->all();
+        return $refeicoes;
     }
 }

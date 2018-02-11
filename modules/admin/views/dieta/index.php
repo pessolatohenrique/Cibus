@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -22,7 +23,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     'valor_dieta',
                     [
                         'class' => 'yii\grid\ActionColumn',
+                        'template' => '{view} {update} {delete}',
                         'headerOptions' => ['width' => '70'],
+                        'buttons' => [
+                            'view' => function ($url, $model, $key) {
+                                return Html::a(
+                                    '<span class="glyphicon glyphicon-eye-open"></span>',
+                                    Url::to(['alimento-dieta/index', 'dieta_id' => $model->id]), 
+                                    [
+                                        'data-pjax'=>true,
+                                        'action'=>Url::to(['alimento-dieta/index', 
+                                            'dieta_id' => $model->id])
+                                    ]
+                                );
+                            }
+                        ]
                     ]
                 ],
             ]); ?>
