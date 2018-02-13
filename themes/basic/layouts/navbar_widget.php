@@ -34,10 +34,10 @@ if(!$isVisitor):
 	        	'active' => false
 	        ],
 	        [
-	        	'label' => 'Page 1', 
+	        	'label' => 'Refeições', 
 	        	'items' => [
-	        		['label' => 'Page 1-1', 'url' => ['#']],
-	        		['label' => 'Page 1-2', 'url' => ['#']],
+	        		['label' => 'Refeição', 'url' => ['../usuario-refeicao']],
+	        		['label' => 'Grupo Alimentar', 'url' => ['#']],
 	        	],
 	        	'options' => ['class' => 'navbar-align'],
 	        ],

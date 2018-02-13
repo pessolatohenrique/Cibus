@@ -10,9 +10,9 @@ use app\models\Refeicao;
 use yii\filters\VerbFilter;
 use app\models\AlimentoDieta;
 use app\models\GrupoAlimentar;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use app\models\AlimentoDietaSearch;
-use yii\filters\AccessControl;
 
 /**
  * AlimentoDietaController implements the CRUD actions for AlimentoDieta model.

@@ -166,6 +166,23 @@ a, a:visited, a:hover{
 	padding-left: 0.5em;
 }
 
+.box-header {
+	color: #444;
+    display: block;
+    padding: 10px;
+	position: relative;
+	border-bottom: 1px solid #f4f4f4;
+	padding-left: 1.8em;
+}
+.custom-title {
+	font-size: 1.2em;
+}
+
+.box-header > .box-title {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
 .box-border{
     border-top: 3px solid #d2d6de;
 }
@@ -174,8 +191,11 @@ a, a:visited, a:hover{
 	border-top-color: #00a65a;
 }
 
+.box-info{
+	border-top-color: #00c0ef;
+}
+
 .box-theme{
-	/*background-color: #77D2C8;*/
 	background-color: #83a1d7;
 }
 
@@ -234,6 +254,42 @@ p.pesquisa-invalida{
 	background-color: #c62828;
 }
 
+.tabela-refeicao tbody > tr:last-child {
+	font-weight: bold;
+	background-color:#dee2e6;
+}
+
+fieldset {
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 0.7em;
+}
+
+.box fieldset:nth-child(4) {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+fieldset > legend {
+	color: #4F8EFF;
+	border-bottom: none;
+	font-size: 1.2em;
+	font-weight: 500;
+	margin-bottom: 0.7em;
+}
+
+.box fieldset:nth-of-type(n+2) > legend{
+	padding-top: 1.1em;
+}
+
+.checkboxgroup label {
+	font-weight: normal;
+	padding-right: 0.5em;
+}
+
+input[type=checkbox] {
+	zoom: 1.5;
+	vertical-align: bottom;
+}
 /**
  * configurações do smart-phone
  */
