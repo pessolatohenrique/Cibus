@@ -82,9 +82,14 @@ class UsuarioRefeicaoController extends Controller
     public function actionCreate()
     {
         $model = new UsuarioRefeicao();
+        $post = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load($post) && $model->save()) {
+            if ($post['continua_insercao'] == 1) {
+                \Yii::$app->getSession()->setFlash('success', 'Alimento adicionado na refeição com sucesso!');
+                return $this->redirect(['create']);
+            } 
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [

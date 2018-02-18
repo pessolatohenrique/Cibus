@@ -42,7 +42,7 @@ html, body {
 }
 
 a, a:visited, a:hover{
-	color: #0d9f40;
+	/* color: #0d9f40; */
 	text-decoration: none;
 }
 
@@ -289,6 +289,20 @@ fieldset > legend {
 input[type=checkbox] {
 	zoom: 1.5;
 	vertical-align: bottom;
+}
+
+.loader{
+    background: rgba( 255, 255, 255, .8 ) 
+	    url('https://www.ipswitch.com/library/img/loading.gif')
+	    50% 50%
+	    no-repeat;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    display: none;
 }
 /**
  * configurações do smart-phone

@@ -17,6 +17,7 @@ use Yii;
  */
 class Alimento extends \yii\db\ActiveRecord
 {
+    public $total_calorias;
     /**
      * @inheritdoc
      */
@@ -72,5 +73,18 @@ class Alimento extends \yii\db\ActiveRecord
         $query = self::find()->select(['id','descricao'])->orderBy('descricao','ASC');
         $foods = $query->all();
         return $foods;
+    }
+
+    /**
+     * calcula o total de calorias de acordo com a quantidade
+     * @param Float $quantidade quantidade consumida
+     * @return void
+     */
+    public function calculaCalorias($quantidade)
+    {
+        $this->total_calorias = 0;
+        if ($quantidade != "") {
+            $this->total_calorias = $this->calorias * $quantidade;
+        }
     }
 }

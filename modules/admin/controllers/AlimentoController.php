@@ -31,6 +31,12 @@ class AlimentoController extends Controller
                         'actions' => ['index', 'create', 'update', 'view', 'delete', 'search'],
                         'roles' => ['manageFood'],
                     ],
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'actions' => ['calculate'],
+                        'roles' => ['@'],
+                    ],
                 ]
             ],
             'verbs' => [
@@ -140,6 +146,28 @@ class AlimentoController extends Controller
             );
         }
         
+        echo Json::encode($retorno);
+    }
+
+    /**
+     * calcula o total de calorias de um alimento, de acordo com a quantidade informada
+     * @param Integer $id id do alimento pesquisado
+     * @param Integer $quantidade quantidade consumida
+     * @return void
+     */
+    public function actionCalculate($id, $quantidade)
+    {
+        $alimento = Alimento::find()->where(['id' => $id])->one();
+        $retorno = array();
+
+        if (count($alimento) > 0) {
+            $alimento->calculaCalorias($quantidade);
+            $retorno = array(
+                'medida_caseira' => $alimento->medida_caseira,
+                'calorias' => $alimento->total_calorias
+            );
+        }
+
         echo Json::encode($retorno);
     }
 
