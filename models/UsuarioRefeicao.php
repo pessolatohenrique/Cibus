@@ -113,4 +113,40 @@ class UsuarioRefeicao extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'usuario_id']);
     }
+
+    /**
+     * calcula a quantidade consumida de um grupo de alimentos em uma refeição
+     * @param Array $meal alimentos consumidos na refeição
+     * @return Float $sum valores somados
+     */
+    public function sumQuantity($meal)
+    {
+        $sum = 0;
+        $quantities = array_column($meal, 'quantidade');
+        $sum = array_sum($quantities);
+        return $sum;
+    }
+
+    /**
+     * calcula o total de calorias consumidas de um grupo de alimentos em uma refeição
+     * @param Array $meal alimentos consumidos na refeição
+     * @return Float $sum valores somados
+     */
+    public function sumCalories($meal)
+    {
+        $sum = 0;
+        $calorias = array_column($meal, 'calorias_total');
+        $sum = array_sum($calorias);
+        return $sum;
+    }
+
+    /**
+     * calcula o total de calorias consumidas para um alimento
+     * @return Float $total total consumido
+     */
+    public function calculaCalorias()
+    {
+        $calorias = $this->alimento->calorias;
+        $this->calorias_total = $this->quantidade * $calorias;
+    }
 }

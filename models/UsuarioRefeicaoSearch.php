@@ -4,8 +4,9 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use app\components\DateHelper;
 use app\models\UsuarioRefeicao;
+use yii\data\ActiveDataProvider;
 
 /**
  * UsuarioRefeicaoSearch represents the model behind the search form of `app\models\UsuarioRefeicao`.
@@ -47,8 +48,10 @@ class UsuarioRefeicaoSearch extends UsuarioRefeicao
     public function search($params)
     {
         $query = UsuarioRefeicao::find();
-
+        $user_id = Yii::$app->user->identity->id;
+    
         // add conditions that should always apply here
+        $query->andWhere(['usuario_id' => $user_id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -62,19 +65,45 @@ class UsuarioRefeicaoSearch extends UsuarioRefeicao
             return $dataProvider;
         }
 
+        if ($this->data_inicial == null && $this->data_final == null) {
+            $query->andWhere(['data_consumo' => date("Y-m-d")]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'usuario_id' => $this->usuario_id,
-            'refeicao_id' => $this->refeicao_id,
-            'alimento_id' => $this->alimento_id,
-            'data_consumo' => $this->data_consumo,
-            'horario_consumo' => $this->horario_consumo,
-            'quantidade' => $this->quantidade,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'usuario_id' => $this->usuario_id
         ]);
-
+        
         return $dataProvider;
+    }
+
+    /**
+     * realiza o agrupamento por refeicao de acordo com o resultado
+     * @param Array $results resultado de uma busca da model UsuarioRefeicao
+     * @return Array $group resultado agrupado
+     */
+    public function groupByMeal($results) {
+        $group = array();
+        $meals = array_unique(array_column($results, 'refeicao_id')); 
+        sort($meals);
+
+        if (count($meals) > 0) {
+            foreach($meals as $key => $meal) {
+                $arrayTmp = array();
+                foreach($results as $key => $result) {
+                    if ($result->refeicao_id == $meal) {
+                        $result->data_consumo = DateHelper::toBrazilian($result->data_consumo);
+                        $result->horario_consumo = DateHelper::formatTime($result->horario_consumo);
+                        $result->calculaCalorias();
+                        array_push($arrayTmp, $result);
+                    }
+                }
+                array_push($group, $arrayTmp);
+            }
+        }
+
+        $group = array_fill_keys(array('Alimentos'), $group);
+        return $group;
     }
 }

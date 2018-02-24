@@ -1,9 +1,18 @@
 <div class="row">
+<?php
+
+use app\models\UsuarioRefeicao;
+foreach($meals as $key => $meal):
+    $first_meal = $meal[0];
+?>
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="box box-border box-info">
             <div class="box-header with-border">
-                <h4 class="custom-title">Café da Manhã</h4>
-                <p>Refeição realizada em <strong>13/02/2018</strong> às <strong>07:30</strong></p>
+                <h4 class="custom-title"><?=$first_meal->refeicao->descricao?></h4>
+                <p>
+                    Refeição realizada em <strong><?=$first_meal->data_consumo?></strong> 
+                    às <strong><?=$first_meal->horario_consumo?></strong>
+                </p>
             </div>
             <div class="box-body">
                 <table class="table tabela-refeicao">
@@ -18,27 +27,30 @@
                     </thead>
                     <tbody>
                         <?php 
-                        for ($i = 1; $i < 5; $i++):
+                        foreach($meal as $key => $food):
                         ?>
                             <tr>
-                                <td>Suco de Maracujá</td>
-                                <td>Frutas</td>
-                                <td>1</td>
-                                <td>Um Copo de 250ml</td>
-                                <td>200</td>
+                                <td><?=$food->alimento->descricao?></td>
+                                <td><?=$food->alimento->grupo->descricao?></td>
+                                <td><?=$food->quantidade?></td>
+                                <td><?=$food->alimento->medida_caseira?></td>
+                                <td><?=$food->calorias_total?></td>
                             </tr>
                         <?php
-                        endfor;
+                        endforeach;
                         ?>
                         <tr>
                             <td colspan="2">Total em quantidade</td>
-                            <td>5</td>
+                            <td><?=UsuarioRefeicao::sumQuantity($meal)?></td>
                             <td>Total em calorias</td>
-                            <td>1000</td>
+                            <td><?=UsuarioRefeicao::sumCalories($meal)?></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <?php
+    endforeach;
+    ?>
 </div>

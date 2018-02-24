@@ -54,10 +54,12 @@ class UsuarioRefeicaoController extends Controller
     {
         $searchModel = new UsuarioRefeicaoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $meals = $searchModel->groupByMeal($dataProvider->getModels());
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'meals' => $meals['Alimentos']
         ]);
     }
 

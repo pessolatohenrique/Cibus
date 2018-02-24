@@ -160,14 +160,14 @@ class AlimentoController extends Controller
         $alimento = Alimento::find()->where(['id' => $id])->one();
         $retorno = array();
 
-        if (count($alimento) > 0) {
+        // if (array_key_exists("id", $alimento)) {
             $alimento->calculaCalorias($quantidade);
             $retorno = array(
                 'medida_caseira' => $alimento->medida_caseira,
                 'calorias' => $alimento->total_calorias
             );
-        }
-
+        // }
+        // var_dump($retorno); die;
         echo Json::encode($retorno);
     }
 

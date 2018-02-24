@@ -28,9 +28,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $searchModel
             ])?>
         </div>
+
         <div class="col-lg-8 col-md-8 col-sm-8">
+            <?php 
+            if (empty($meals)):
+            ?>
+                <?= $this->render('_refeicoes_not_found')?>
+            <?php
+            endif;
+            ?>
+            
             <?= $this->render('_lista-refeicoes', [
-                'model' => $searchModel
+                'model' => $searchModel,
+                'meals' => $meals
             ])?>
         </div>
     </div>

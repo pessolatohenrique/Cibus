@@ -43,4 +43,16 @@ class DateHelper
         $past_date = date("Y-m-d", $past_date);
         return $past_date;
 	}
+
+	/**
+	 * formata a data em horas e minutos
+	 * exemplo: 15:30:00 será transformado em 15:30
+	 * @param $full_time horário completo
+	 * @return String $time_format horário formatado
+	 */
+	public static function formatTime($full_time)
+	{
+		$time_format = substr($full_time,0,5);
+		return $time_format;
+	}
 }
