@@ -59,7 +59,10 @@ class UsuarioRefeicaoController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'meals' => $meals['Alimentos']
+            'meals' => $meals['Alimentos'],
+            'meals_search' => UsuarioRefeicao::listMeals(),
+            'foods_search' => UsuarioRefeicao::listFoods(),
+            'groups_search' => UsuarioRefeicao::listGroups()
         ]);
     }
 

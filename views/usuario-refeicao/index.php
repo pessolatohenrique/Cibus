@@ -25,7 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4">
             <?= $this->render('_search', [
-                'model' => $searchModel
+                'model' => $searchModel,
+                'meals_search' => $meals_search,
+                'foods_search' => $foods_search,
+                'groups_search' => $groups_search
             ])?>
         </div>
 

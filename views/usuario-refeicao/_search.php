@@ -2,10 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
+use yii\helpers\ArrayHelper;
+use app\components\DateHelper;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\UsuarioRefeicaoSearch */
-/* @var $form yii\widgets\ActiveForm */
+if (strpos($model->data_inicial, "-") > 0) {
+    $model->data_inicial = DateHelper::toBrazilian($model->data_inicial);
+}
+
 ?>
 
 <div class="usuario-refeicao-search">
@@ -18,32 +22,27 @@ use yii\widgets\ActiveForm;
         <div class="box-body">
             <fieldset>
                 <legend>Data da Refeição</legend>
-                <?= $form->field($model, 'data_inicial') ?>
-                <?= $form->field($model, 'data_final') ?>
+                <?= $form->field($model, 'data_inicial')->widget(MaskedInput::className(), [
+                    'mask' => '99/99/9999',
+                ])->label("Data") ?>
             </fieldset>
-
+   
             <fieldset>
                 <legend>Refeições Realizadas</legend>
-                <?= $form->field($model, 'refeicao_id')->checkboxList ([
-                    1 => 'Refeição 1',
-                    2 => 'Refeição 2',
-                    3 => 'Refeição 3',
-                    4 => 'Refeição 4',
-                    5 => 'Refeição 5',
-                    6 => 'Refeição 6',
-                ], [
-                    'class' => 'checkboxgroup',
-                    'separator' => '<br>'
-                ])->label("Selecione") ?>
+                <?= $form->field($model, 'refeicao_id')->checkboxList (
+                    ArrayHelper::map($meals_search, 'refeicao_id', 'refeicao.descricao'), 
+                    [
+                        'class' => 'checkboxgroup',
+                        'separator' => '<br>'
+                    ]
+                )->label("Selecione") ?>
             </fieldset>
 
             <fieldset>
                 <legend>Alimentos Consumidos</legend>
-                <?= $form->field($model, 'alimento_id')->checkboxList ([
-                    1 => 'Alimento 1',
-                    2 => 'Alimento 2',
-                    3 => 'Alimento 3'
-                ], [
+                <?= $form->field($model, 'alimento_id')->checkboxList ( 
+                ArrayHelper::map($foods_search, 'alimento_id', 'alimento.descricao'),
+                [
                     'class' => 'checkboxgroup',
                     'separator' => '<br>'
                 ])->label("Selecione") ?>
@@ -51,11 +50,12 @@ use yii\widgets\ActiveForm;
 
             <fieldset>
                 <legend>Grupo Alimentar</legend>
-                <?= $form->field($model, 'grupo_id')->checkboxList ([
-                    1 => 'Grupo 1',
-                    2 => 'Grupo 2',
-                    3 => 'Grupo 3'
-                ], [
+                <?= $form->field($model, 'grupo_id')->checkboxList (
+                    ArrayHelper::map($groups_search, 
+                        'alimento.grupo.id', 
+                        'alimento.grupo.descricao'
+                    ),
+                [
                     'class' => 'checkboxgroup',
                     'separator' => '<br>'
                 ])->label("Selecione") ?>

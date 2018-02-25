@@ -149,4 +149,62 @@ class UsuarioRefeicao extends \yii\db\ActiveRecord
         $calorias = $this->alimento->calorias;
         $this->calorias_total = $this->quantidade * $calorias;
     }
+
+    /**
+     * realiza listagem de refeições que um usuário já realizou
+     * essa listagem independente da data de realização
+     * @return Array $meals lista com refeições realizadas
+     */
+    public static function listMeals()
+    {
+        $query = UsuarioRefeicao::find()
+        ->select(['usuario_refeicao.refeicao_id', 'ref.descricao'])
+        ->distinct()
+        ->joinWith('refeicao ref')
+        ->where(['usuario_id' => Yii::$app->user->identity->id])
+        ->orderBy('ref.id', 'ASC');
+
+        $meals = $query->all();
+
+        return $meals;
+    }
+
+    /**
+     * realiza a listagem de alimentos que o usuário já consumiu
+     * essa listagem idnependente da data de realização
+     * @return Array $foods lista com alimentos consumidos
+     */
+    public static function listFoods()
+    {
+        $query = UsuarioRefeicao::find()
+        ->select(['usuario_refeicao.alimento_id', 'ali.descricao'])
+        ->distinct()
+        ->joinWith('alimento ali')
+        ->where(['usuario_id' => Yii::$app->user->identity->id])
+        ->orderBy('ali.descricao', 'ASC');
+
+        $foods = $query->all();
+
+        return $foods;
+    }
+
+    /**
+     * realiza a listagem de grupos alimentares que o usuário já consumiu
+     * essa listagem indepente da data de realização
+     * @return Array $groups lista com grupos consumidos
+     */
+    public static function listGroups()
+    {
+        $query = UsuarioRefeicao::find()
+        ->select(['usuario_refeicao.alimento_id', 'ali.grupo_id', 'gru.descricao'])
+        ->distinct()
+        ->joinWith('alimento ali')
+        ->join('LEFT JOIN', 'grupos_alimentares gru', 'ali.grupo_id = gru.id')
+        ->where(['usuario_id' => Yii::$app->user->identity->id])
+        ->orderBy('gru.descricao', 'ASC');
+
+        $groups = $query->all();
+
+        return $groups;
+    }
 }

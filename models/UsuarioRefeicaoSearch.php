@@ -23,8 +23,8 @@ class UsuarioRefeicaoSearch extends UsuarioRefeicao
     public function rules()
     {
         return [
-            [['id', 'usuario_id', 'refeicao_id', 'alimento_id', 'created_at', 'updated_at'], 'integer'],
-            [['data_consumo', 'horario_consumo', 'data_inicial', 'data_final', 'grupo_id'], 'safe'],
+            [['id', 'usuario_id', 'created_at', 'updated_at'], 'integer'],
+            [['data_consumo', 'refeicao_id', 'alimento_id' ,'horario_consumo', 'data_inicial', 'data_final', 'grupo_id'], 'safe'],
             [['quantidade'], 'number'],
         ];
     }
@@ -47,7 +47,18 @@ class UsuarioRefeicaoSearch extends UsuarioRefeicao
      */
     public function search($params)
     {
+        /*
+        SELECT DISTINCT ali.grupo_id, gru.descricao
+FROM usuario_refeicao usuref
+LEFT JOIN alimentos ali ON usuref.alimento_id = ali.id 
+LEFT JOIN grupos_alimentares gru ON ali.grupo_id = gru.id
+ORDER BY gru.descricao ASC;
+        */
+        date_default_timezone_set('America/Sao_Paulo');
+
         $query = UsuarioRefeicao::find();
+        $query->joinWith('alimento ali');
+        $query->join('LEFT JOIN', 'grupos_alimentares gru', 'ali.grupo_id = gru.id');
         $user_id = Yii::$app->user->identity->id;
     
         // add conditions that should always apply here
@@ -65,19 +76,39 @@ class UsuarioRefeicaoSearch extends UsuarioRefeicao
             return $dataProvider;
         }
 
+        $query = $this->customSearch($query);
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'data_consumo' => $this->data_inicial
+        ]);
+
+        $query->andFilterWhere(['in', 'refeicao_id', $this->refeicao_id]);
+        $query->andFilterWhere(['in', 'alimento_id', $this->alimento_id]);
+        $query->andFilterWhere(['in', 'gru.id', $this->grupo_id]);
+
+        return $dataProvider;
+    }
+
+    /**
+     * customização de pesquisa. Por exemplo: datas em branco, formatação de datas
+     * entre outros
+     * @param Object $query objeto da query que está sendo construída
+     * @return Object $new_query query modificada
+     */
+    public function customSearch($query) 
+    {
+        $new_query = $query;
         if ($this->data_inicial == null && $this->data_final == null) {
             $query->andWhere(['data_consumo' => date("Y-m-d")]);
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'usuario_id' => $this->usuario_id
-        ]);
-        
-        return $dataProvider;
-    }
+        if (strpos($this->data_inicial, "/") > 0) {
+            $this->data_inicial = DateHelper::toAmerican($this->data_inicial);
+        }
 
+        return $new_query;
+    }
     /**
      * realiza o agrupamento por refeicao de acordo com o resultado
      * @param Array $results resultado de uma busca da model UsuarioRefeicao

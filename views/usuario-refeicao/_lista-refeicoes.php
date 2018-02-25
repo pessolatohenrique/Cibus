@@ -22,7 +22,7 @@ foreach($meals as $key => $meal):
                             <th>Grupo Alimentar</th>
                             <th>Quantidade</th>
                             <th>Medida Caseira</th>
-                            <th>Calorias (KCAL)</th>
+                            <th>Calorias</th>
                         </tr>
                     </thead>
                     <tbody>
