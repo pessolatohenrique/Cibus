@@ -14,7 +14,7 @@ foreach($meals as $key => $meal):
                     às <strong><?=$first_meal->horario_consumo?></strong>
                 </p>
             </div>
-            <div class="box-body">
+            <div class="box-body table-responsive">
                 <table class="table tabela-refeicao">
                     <thead>
                         <tr>

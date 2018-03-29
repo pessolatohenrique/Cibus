@@ -32,12 +32,12 @@ AlimentoAsset::register($this);
     </div>
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-4">
+        <div class="col-lg-2 col-md-2 col-sm-6">
             <?= $form->field($model, 'data_consumo')->widget(MaskedInput::className(), [
                 'mask' => '99/99/9999',
             ]) ?>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-4">
+        <div class="col-lg-2 col-md-2 col-sm-6">
             <?= $form->field($model, 'horario_consumo')->widget(MaskedInput::className(), [
                 'mask' => '99:99',
             ]) ?>
@@ -55,7 +55,7 @@ AlimentoAsset::register($this);
                 ],
             ]);?>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-4">
+        <div class="col-lg-2 col-md-2 col-sm-6">
             <?= $form->field($model, 'quantidade')->textInput([
                 'type' => 'number',
                 'step' => '.50',
