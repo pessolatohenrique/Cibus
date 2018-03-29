@@ -14,7 +14,7 @@ foreach($meals as $key => $meal):
                     às <strong><?=$first_meal->horario_consumo?></strong>
                 </p>
             </div>
-            <div class="box-body table-responsive">
+            <div class="box-body table-responsive table-group">
                 <table class="table tabela-refeicao">
                     <thead>
                         <tr>
@@ -36,7 +36,7 @@ foreach($meals as $key => $meal):
                                 <td><?=$food->quantidade?></td>
                                 <td><?=$food->alimento->medida_caseira?></td>
                                 <td><?=$food->calorias_total?></td>
-                                <td>
+                                <td class="table-action-column">
                                     <a href="/usuario-refeicao/update?id=<?=$food->id?>" title="Atualizar" aria-label="Atualizar" data-pjax="0">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
@@ -49,7 +49,7 @@ foreach($meals as $key => $meal):
                         <?php
                         endforeach;
                         ?>
-                        <tr>
+                        <tr class="table-result-line">
                             <td colspan="2">Total em quantidade</td>
                             <td><?=UsuarioRefeicao::sumQuantity($meal)?></td>
                             <td>Total em calorias</td>
