@@ -63,7 +63,7 @@ if (strpos($model->data_inicial, "-") > 0) {
 
             <div class="form-group">
                 <?= Html::submitButton('Pesquisar', ['class' => 'btn btn-primary']) ?>
-                <?= Html::submitButton('Limpar filtros', ['class' => 'btn btn-info']) ?>
+                <?= Html::button('Limpar filtros', ['class' => 'btn btn-info limpa_filtro ']) ?>
             </div>
         
         </div>
