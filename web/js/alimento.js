@@ -52,8 +52,15 @@ $(document).ready(function() {
     var params = {
         "id": $(".cmb_alimento").val()
     };
+
+    var params_calculo = {
+        "id": $(".cmb_alimento_refeicao").val(),
+        "quantidade": $(".quantidade_alimento_refeicao").val()
+    };
+    var elemento = $(".cmb_alimento_refeicao");
     buscaInfoAlimento(action, params, "");
-    showHideLoader();
+    buscaCaloriasAlimento("/admin/alimento/calculate", params_calculo, elemento);
+    // showHideLoader();
 
     $(".cmb_alimento").on("change", function(){
         var elemento = $(this);

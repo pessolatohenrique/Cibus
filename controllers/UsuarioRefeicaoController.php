@@ -55,7 +55,7 @@ class UsuarioRefeicaoController extends Controller
         $searchModel = new UsuarioRefeicaoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $meals = $searchModel->groupByMeal($dataProvider->getModels());
-        
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -93,7 +93,7 @@ class UsuarioRefeicaoController extends Controller
             if ($post['continua_insercao'] == 1) {
                 \Yii::$app->getSession()->setFlash('success', 'Alimento adicionado na refeição com sucesso!');
                 return $this->redirect(['create']);
-            } 
+            }
             return $this->redirect(['index']);
         }
 
@@ -114,7 +114,7 @@ class UsuarioRefeicaoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

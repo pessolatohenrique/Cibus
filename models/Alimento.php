@@ -68,7 +68,7 @@ class Alimento extends \yii\db\ActiveRecord
      *
      * @return Array $foods lista de alimentos encontrados
      */
-    public function listDescription()
+    public static function listDescription()
     {
         $query = self::find()->select(['id','descricao'])->orderBy('descricao','ASC');
         $foods = $query->all();

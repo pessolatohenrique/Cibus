@@ -119,7 +119,7 @@ class UsuarioRefeicao extends \yii\db\ActiveRecord
      * @param Array $meal alimentos consumidos na refeição
      * @return Float $sum valores somados
      */
-    public function sumQuantity($meal)
+    public static function sumQuantity($meal)
     {
         $sum = 0;
         $quantities = array_column($meal, 'quantidade');
@@ -132,7 +132,7 @@ class UsuarioRefeicao extends \yii\db\ActiveRecord
      * @param Array $meal alimentos consumidos na refeição
      * @return Float $sum valores somados
      */
-    public function sumCalories($meal)
+    public static function sumCalories($meal)
     {
         $sum = 0;
         $calorias = array_column($meal, 'calorias_total');

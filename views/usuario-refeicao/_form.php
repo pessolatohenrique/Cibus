@@ -11,7 +11,10 @@ use app\assets\AlimentoAsset;
 date_default_timezone_set("America/Sao_Paulo");
 $model->data_consumo = date("d/m/Y");
 $model->horario_consumo = date("H:i");
-$model->quantidade = 1;
+
+if($model->quantidade == null) {
+    $model->quantidade = 1;
+}
 
 AlimentoAsset::register($this);
 ?>
@@ -90,9 +93,15 @@ AlimentoAsset::register($this);
 
     <div class="form-group">
         <?= Html::submitButton('Salvar', ['class' => 'btn btn-primary']) ?>
-        <?= Html::submitButton('Salvar e criar outro', [
-            'class' => 'btn btn-info btn-continue'
-        ]) ?>
+        <?php
+        if($model->id === null):
+        ?>
+            <?= Html::submitButton('Salvar e criar outro', [
+                'class' => 'btn btn-info btn-continue'
+            ]) ?>
+        <?php
+        endif;
+        ?>
     </div>
 
     <?= Html::hiddenInput('continua_insercao', 0, [

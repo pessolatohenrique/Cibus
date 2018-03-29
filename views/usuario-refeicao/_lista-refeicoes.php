@@ -23,6 +23,7 @@ foreach($meals as $key => $meal):
                             <th>Quantidade</th>
                             <th>Medida Caseira</th>
                             <th>Calorias</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,15 @@ foreach($meals as $key => $meal):
                                 <td><?=$food->quantidade?></td>
                                 <td><?=$food->alimento->medida_caseira?></td>
                                 <td><?=$food->calorias_total?></td>
+                                <td>
+                                    <a href="/usuario-refeicao/update?id=<?=$food->id?>" title="Atualizar" aria-label="Atualizar" data-pjax="0">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a href="/usuario-refeicao/delete?id=<?=$food->id?>" title="Excluir" aria-label="Excluir" data-pjax="0" 
+                                        data-confirm="Deseja realmente excluir este alimento da refeiçāo?" data-method="post">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
                             </tr>
                         <?php
                         endforeach;
@@ -44,6 +54,7 @@ foreach($meals as $key => $meal):
                             <td><?=UsuarioRefeicao::sumQuantity($meal)?></td>
                             <td>Total em calorias</td>
                             <td><?=UsuarioRefeicao::sumCalories($meal)?></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
