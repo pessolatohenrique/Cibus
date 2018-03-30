@@ -24,6 +24,11 @@ class FormatterHelper
 	 */
 	public static function formatBrazilian($value)
 	{
-		return number_format($value, 2, ",", ".");
+        $format_value = $value;
+        if (strpos($value, ".") > 0) {
+            $format_value = number_format($value, 2, ",", ".");
+        }
+    
+		return $format_value;
 	}
 }

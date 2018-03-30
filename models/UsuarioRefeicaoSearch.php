@@ -47,13 +47,6 @@ class UsuarioRefeicaoSearch extends UsuarioRefeicao
      */
     public function search($params)
     {
-        /*
-        SELECT DISTINCT ali.grupo_id, gru.descricao
-FROM usuario_refeicao usuref
-LEFT JOIN alimentos ali ON usuref.alimento_id = ali.id 
-LEFT JOIN grupos_alimentares gru ON ali.grupo_id = gru.id
-ORDER BY gru.descricao ASC;
-        */
         date_default_timezone_set('America/Sao_Paulo');
 
         $query = UsuarioRefeicao::find();
@@ -108,6 +101,43 @@ ORDER BY gru.descricao ASC;
         }
 
         return $new_query;
+    }
+
+    /**
+     * realiza a somatória de calorias consumidas por refeição
+     * utilizando conceitos de SUM e GROUP BY
+     * @param Array $params dados pesquisados no search
+     * @return Array $dataProvider provider fornecido pelo Yii2 com resultados encontrados
+     */
+    public function searchSumGroup($params) 
+    {
+        $query = UsuarioRefeicao::find()
+        ->select([
+            'SUM((usuario_refeicao.quantidade * alim.calorias)) AS calorias_total', 
+            'refeicao_id', 'horario_consumo'
+        ])
+        ->joinWith('alimento alim')
+        ->joinWith('refeicao')
+        ->where(['usuario_id' => Yii::$app->user->identity->id])
+        ->groupBy(['refeicao_id'])
+        ->orderBy('refeicao_id', 'ASC');
+
+        $this->load($params);
+        $this->customSearch($query);
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'data_consumo' => $this->data_inicial
+        ]);
+
+        $query->andFilterWhere(['in', 'refeicao_id', $this->refeicao_id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => false
+        ]);
+
+        return $dataProvider;
     }
     /**
      * realiza o agrupamento por refeicao de acordo com o resultado
