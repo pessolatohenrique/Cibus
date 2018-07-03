@@ -167,7 +167,7 @@ class AlimentoController extends Controller
                 'calorias' => $alimento->total_calorias
             );
         }
-        // var_dump($retorno); die;
+
         echo Json::encode($retorno);
     }
 

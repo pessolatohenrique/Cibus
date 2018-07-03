@@ -91,6 +91,7 @@ class SiteController extends Controller
             $factory = new UsuarioFactory();
             $objeto_criado = $factory->createUser(Yii::$app->user->identity->sexo);
             $model = $objeto_criado->find()->where(['id' => Yii::$app->user->identity->id])->one();
+
             return $this->render('index',[
                 'model' => $model
             ]);
