@@ -4,6 +4,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use \Firebase\JWT\JWT;
 use yii\web\IdentityInterface;
 use app\behaviors\FormatFieldsBehavior;
 use app\behaviors\InsertHistoryBehavior;
@@ -127,7 +128,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['access_token' => $token]);
     }
     /**
      * Finds user by username
@@ -216,6 +217,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    public function generateToken() 
+    {
+        $concat_string = $this->id.$this->username;
+        $key = md5($concat_string);
+        $created_at = strtotime(date("Y-m-d"));
+
+        $token = array(
+            "iss" => "http://cibus.com.br",
+            "aud" => "http://cibus.com.br",
+            "iat" => $created_at
+        );
+
+        $jwt = JWT::encode($token, $key);
+        
+        $this->access_token = $jwt;
+        $this->save(false);
+
+        return $jwt;
     }
     /**
      * Generates new password reset token

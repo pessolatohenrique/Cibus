@@ -13,6 +13,9 @@ $config = [
         'admin' => [
             'class' => 'app\modules\admin\Admin',
         ],
+        'api' => [
+            'class' => 'app\modules\api\Module',
+        ],
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
         ]
@@ -21,9 +24,16 @@ $config = [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+        'jwt' => [
+            'class' => 'sizeg\jwt\Jwt',
+            'key' => 'secret',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Ud08gg1nEg-wMCluWrL2PsvAn1icmSFN',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
