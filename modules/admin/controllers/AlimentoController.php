@@ -168,7 +168,7 @@ class AlimentoController extends Controller
             );
         }
 
-        echo Json::encode($retorno);
+        return Json::encode($retorno);
     }
 
     /**

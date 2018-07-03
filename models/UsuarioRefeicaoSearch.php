@@ -51,6 +51,7 @@ class UsuarioRefeicaoSearch extends UsuarioRefeicao
 
         $query = UsuarioRefeicao::find();
         $query->joinWith('alimento ali');
+        $query->joinWith('refeicao ref');
         $query->join('LEFT JOIN', 'grupos_alimentares gru', 'ali.grupo_id = gru.id');
         $user_id = Yii::$app->user->identity->id;
     
