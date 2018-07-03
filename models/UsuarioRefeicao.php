@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\components\DateHelper;
+use app\components\FormatterHelper;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -88,6 +89,14 @@ class UsuarioRefeicao extends \yii\db\ActiveRecord
         $this->usuario_id = Yii::$app->user->identity->id;
         $this->data_consumo = DateHelper::toAmerican($this->data_consumo);
         return parent::beforeSave($insert);
+    }
+
+    /** 
+     * será chamado após encontrar um resultado desta model
+     * utilizado principalmente para formatar campos
+    */
+    public function afterFind() {
+        $this->calorias_total = FormatterHelper::formatBrazilian($this->calorias_total);
     }
 
     /**
@@ -206,5 +215,63 @@ class UsuarioRefeicao extends \yii\db\ActiveRecord
         $groups = $query->all();
 
         return $groups;
+    }
+
+    /**
+     * percorre o array e gera um novo array necessário para alimentar o gráfico de pizza
+     * do HighCharts
+     * @param Array $results lista de resultados
+     * @return Array $array_chart lista com dados necessários para montar o gráfico
+     */
+    public function generatePizzaChart($results)
+    {
+        $array_chart = array();
+        if (count($results) > 0) {
+            foreach($results as $key => $result) {
+                $array_tmp = array(
+                    0 => $result->refeicao->descricao,
+                    1 => (int)$result->calorias_total
+                );
+                array_push($array_chart, $array_tmp);
+            }
+        }
+
+        return $array_chart;
+    }
+
+    /**
+     * percorre o array e gera um novo array com nomes de refeições
+     * o objetivo é criar o eixo Y do gráfico de barras do highcharts
+     * @param Array $results lista de resultados
+     * @return Array $array_chart lista com dados necessários para montar o gráfico
+     */
+    public function generateMealColumns($results) {
+        $array_chart = array();
+        if (count($results) > 0) {
+            foreach($results as $key => $result) {
+                $refeicao_name = $result->refeicao->descricao;
+                array_push($array_chart, $refeicao_name);
+            }
+        }
+
+        return $array_chart;
+    }
+
+    /**
+     * percorre o array e gera um novo array com valores totais de refeições
+     * o objetivo é criar o eixo X do gráfico de barras do highcharts
+     * @param Array $results lista de resultados
+     * @return Array $array_chart lista com dados necessários para montar o gráfico
+     */
+    public function generateMealValues($results) {
+        $array_chart = array();
+        if (count($results) > 0) {
+            foreach($results as $key => $result) {
+                $refeicao_total = (float)$result->calorias_total;
+                array_push($array_chart, $refeicao_total);
+            }
+        }
+
+        return $array_chart;
     }
 }

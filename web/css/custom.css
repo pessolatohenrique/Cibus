@@ -264,7 +264,7 @@ fieldset {
 	padding-bottom: 0.7em;
 }
 
-.box fieldset:nth-child(4) {
+.box fieldset:nth-child(4), .fieldset-no-style {
 	border-bottom: none;
 	padding-bottom: 0;
 }
@@ -304,6 +304,7 @@ input[type=checkbox] {
     z-index: 1001;
     display: none;
 }
+
 /**
  * configurações do smart-phone
  */
@@ -337,34 +338,6 @@ input[type=checkbox] {
 	.box-theme{
 	    padding-top: 2.3em;
     	padding-bottom: 1.3em;
-	}
-
-	.table-group .cf:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
-	.table-group * html .cf { zoom: 1; }
-	.table-group *:first-child+html .cf { zoom: 1; }
-	
-	.table-group table { width: 100%; border-collapse: collapse; border-spacing: 0; }
- 
-	.table-group th,
-	.table-group td { margin: 0; vertical-align: top; }
-	.table-group th { text-align: left; }
-	
-	.table-group table { display: block; position: relative; width: 100%; }
-	.table-group thead { display: block; float: left; }
-	.table-group tbody { display: block; width: auto; position: relative; overflow-x: auto; white-space: nowrap; }
-	.table-group thead tr { display: block; }
-	.table-group th { display: block; text-align: right; }
-	.table-group tbody tr { display: inline-block; vertical-align: top; }
-	.table-group td { display: block; min-height: 1.25em; text-align: left; }
- 
- 
-	/* sort out borders */
- 
-
-	.table-group th:last-child,
-
-	.table-result-line, .table-action-column {
-		display: none !important;
 	}
 }
 
