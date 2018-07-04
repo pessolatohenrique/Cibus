@@ -49,17 +49,40 @@ class MealController extends ActiveController
     public function actionCalculate($id, $quantidade)
     {
         $alimento = Alimento::find()->where(['id' => $id])->one();
-        $retorno = array('calorias' => 0);
+        $final_array = array('calorias' => 0);
 
         if (!empty($alimento)) {
             $alimento->calculaCalorias($quantidade);
-            $retorno = array(
+            $final_array = array(
                 'medida_caseira' => $alimento->medida_caseira,
                 'calorias' => $alimento->total_calorias
             );
         }
 
-        return $retorno;
+        return $final_array;
+    }
+
+    public function actionCalculateCalories() {
+        $searchModel = new UsuarioRefeicaoSearch();
+        // $model = new UsuarioRefeicao();
+        $dataProvider = $searchModel->searchSumGroup(Yii::$app->request->queryParams);
+        $result_models = $dataProvider->getModels();
+        $final_array = array();
+
+        if (!empty($result_models)) {
+            foreach($result_models as $key => $val) {
+                $tmp_array = array(
+                    "refeicao_id" => $val->refeicao_id,
+                    "refeicao_descricao" => $val->refeicao->descricao,
+                    "horario_consumo" => $val->horario_consumo,
+                    "calorias_total" => $val->calorias_total
+                );
+
+                array_push($final_array, $tmp_array);
+            }
+        }
+        
+        return $final_array;
     }
 
 }
