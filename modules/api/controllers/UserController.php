@@ -29,12 +29,12 @@ class UserController extends ActiveController
         $model = $objeto_criado->find()->where(['id' => Yii::$app->user->identity->id])->one();
 
         $results_calc = array(
-            "imc" => FormatterHelper::formatBrazilian($model->imc, 2, ',', '.'),
+            "imc" => FormatterHelper::formatBrazilian($model->imc),
             "classificacao_imc" => $model->classificacao_imc,
-            "caf" => FormatterHelper::formatBrazilian($model->caf, 2),
-            "eer" => FormatterHelper::formatBrazilian($model->eer, 2),
+            "caf" => FormatterHelper::formatBrazilian($model->caf),
+            "eer" => FormatterHelper::formatBrazilian($model->eer),
             "idade" => $model->idade,
-            "tmb" => FormatterHelper::formatBrazilian($model->tmb, 2),
+            "tmb" => FormatterHelper::formatBrazilian($model->tmb),
             "valor_dieta" => $model->valor_dieta
         );
 
