@@ -42,7 +42,7 @@ class AlimentoSearch extends Alimento
      */
     public function search($params)
     {
-        $query = Alimento::find();
+        $query = Alimento::find()->joinWith('grupo');
 
         // add conditions that should always apply here
 
@@ -71,8 +71,8 @@ class AlimentoSearch extends Alimento
             'calorias' => $this->calorias,
         ]);
 
-        $query->andFilterWhere(['like', 'descricao', $this->descricao])
-            ->andFilterWhere(['like', 'medida_caseira', $this->medida_caseira]);
+        $query->andFilterWhere(['like', 'alimentos.descricao', $this->descricao])
+            ->andFilterWhere(['like', 'alimentos.medida_caseira', $this->medida_caseira]);
 
         return $dataProvider;
     }
