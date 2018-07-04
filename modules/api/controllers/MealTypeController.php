@@ -28,7 +28,7 @@ class MealTypeController extends ActiveController
         unset($actions['index']);
         return $actions;
     }
-
+    
     public function actionIndex() {
         $searchModel = new RefeicaoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
