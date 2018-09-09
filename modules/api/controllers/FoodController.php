@@ -17,14 +17,14 @@ class FoodController extends ActiveController
         return ['grupo'];
     }
 
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::className(),
-        ];
-        return $behaviors;
-    }
+    // public function behaviors()
+    // {
+    //     $behaviors = parent::behaviors();
+    //     $behaviors['authenticator'] = [
+    //         'class' => HttpBearerAuth::className(),
+    //     ];
+    //     return $behaviors;
+    // }
 
     public function actions()
     {
