@@ -73,6 +73,18 @@ class Homem extends User implements CalculavelInterface
      */
 	public function calculaTmb()
 	{
+        if ($this->idade <= 0) {
+            throw new Exception("Idade inválida");
+        }
+
+        if ($this->peso <= 0) {
+            throw new Exception('O campo peso aceita apenas valores positivos');
+        }
+
+        if ($this->altura <= 0) {
+            throw new Exception('O campo altura aceita apenas valores positivos');
+        }
+
 		$this->tmb = 293 - 3.8 * $this->idade +
 			456.4 * $this->altura + 10.12 * $this->peso;
 	}

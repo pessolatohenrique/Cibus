@@ -305,7 +305,6 @@ class UserTest extends \Codeception\Test\Unit
         $seventyUser->eer = 2750;
         $seventyUser->selecionaDieta();
 
-
         $this->assertEquals(1900, $firstUser->valor_dieta);
         $this->assertEquals(1900, $secondUser->valor_dieta);
         $this->assertEquals(2500, $thirdUser->valor_dieta);

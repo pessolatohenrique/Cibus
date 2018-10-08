@@ -255,4 +255,84 @@ class UserFactoryTest extends \Codeception\Test\Unit
         $eer = FormatterHelper::formatBrazilian($createdObject->eer);
     }
 
+    public function testCalculateTmbToMen() {
+        $factory = new UsuarioFactory();
+
+        $createdObject = $factory->createUser('M');
+        $verifyObject = ($createdObject instanceof Homem); 
+
+        $createdObject->idade = '23';
+        $createdObject->peso = '62.5';
+        $createdObject->altura = '1.65';
+
+        $createdObject->calculaTmb();
+        $tmb = FormatterHelper::formatBrazilian($createdObject->tmb);
+
+        $this->assertEquals('1.591,16', $tmb);
+    }
+
+    public function testCalculateTmbToWomen() {
+        $factory = new UsuarioFactory();
+
+        $createdObject = $factory->createUser('F');
+        $verifyObject = ($createdObject instanceof Mulher); 
+
+        $createdObject->idade = '23';
+        $createdObject->peso = '62.5';
+        $createdObject->altura = '1.65';
+
+        $createdObject->calculaTmb();
+        $tmb = FormatterHelper::formatBrazilian($createdObject->tmb);
+
+        $this->assertEquals('1.385,57', $tmb);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testCalculateTmbWithInvalidAge() {
+        $factory = new UsuarioFactory();
+
+        $createdObject = $factory->createUser('M');
+        $verifyObject = ($createdObject instanceof Homem); 
+
+        $createdObject->idade = '-23';
+        $createdObject->peso = '62.5';
+        $createdObject->altura = '1.65';
+
+        $createdObject->calculaTmb();
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testCalculateTmbWithInvalidWeight() {
+        $factory = new UsuarioFactory();
+
+        $createdObject = $factory->createUser('M');
+        $verifyObject = ($createdObject instanceof Homem); 
+
+        $createdObject->idade = '23';
+        $createdObject->peso = '-62.5';
+        $createdObject->altura = '1.65';
+
+        $createdObject->calculaTmb();
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testCalculateTmbWithInvalidHeight() {
+        $factory = new UsuarioFactory();
+
+        $createdObject = $factory->createUser('M');
+        $verifyObject = ($createdObject instanceof Homem); 
+
+        $createdObject->idade = '23';
+        $createdObject->peso = '62.5';
+        $createdObject->altura = '-1.65';
+
+        $createdObject->calculaTmb();
+    }
+
 }
