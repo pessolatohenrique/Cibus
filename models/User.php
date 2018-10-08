@@ -6,6 +6,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use \Firebase\JWT\JWT;
 use yii\web\IdentityInterface;
+use yii\base\Exception;
 use app\behaviors\FormatFieldsBehavior;
 use app\behaviors\InsertHistoryBehavior;
 
@@ -296,6 +297,14 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function calculaImc()
     {
+        if ($this->peso <= 0) {
+            throw new Exception('O campo peso aceita apenas valores positivos');
+        }
+
+        if ($this->altura <= 0) {
+            throw new Exception('O campo altura aceita apenas valores positivos');
+        }
+
         $total_imc = $this->peso / ($this->altura * $this->altura);
         $this->imc = $total_imc;
     }
