@@ -2,6 +2,7 @@
 namespace app\models;
 use Yii;
 use yii\base\DynamicModel;
+use yii\base\Exception;
 use app\models\Homem;
 use app\models\Mulher;
 
@@ -21,8 +22,8 @@ class UsuarioFactory
 		if (array_key_exists ($sexo, $this->classes)){
 			$objeto = "app\\models\\".$this->classes[$sexo];
 			return new $objeto;
-		}
-		//caso o parâmetro for inválido, retornar uma instância de Homem
-		return new Homem();
+        }
+        
+        throw new Exception("Parâmetro inválido");
 	}
 }
