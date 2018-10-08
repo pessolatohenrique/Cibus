@@ -248,4 +248,32 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertEquals('Obesidade grau 3', $model->classificacao_imc);
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testAgeWithInvalidDate() {
+        $model = new User();
+        $model->data_nascimento = "9999-44-26";
+
+        $model->calculaIdade();
+    }
+
+    public function testAgeWithValidDate() {
+        $firstUser = new User();
+        $firstUser->data_nascimento = "1995-05-26";
+        $firstUser->calculaIdade();
+
+        $secondUser = new User();
+        $secondUser->data_nascimento = "1984-01-01";
+        $secondUser->calculaIdade();
+
+        $thirdUser = new User();
+        $thirdUser->data_nascimento = "1990-12-31";
+        $thirdUser->calculaIdade();
+        
+        $this->assertEquals(23, $firstUser->idade);
+        $this->assertEquals(34, $secondUser->idade);
+        $this->assertEquals(27, $thirdUser->idade);
+    }
+
 }

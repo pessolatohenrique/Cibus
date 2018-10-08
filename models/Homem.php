@@ -2,6 +2,7 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Exception;
 use app\models\User;
 use app\behaviors\CalculateBehavior;
 use app\interfaces\CalculavelInterface;
@@ -44,6 +45,22 @@ class Homem extends User implements CalculavelInterface
      */
     public function calculaEer()
     {
+        if ($this->idade <= 0 || $this->idade > 150) {
+            throw new Exception("Idade inválida");
+        }
+
+        if ($this->caf <= 0 || $this->caf > 5) {
+            throw new Exception("CAF (Coeficiente de atividade física) inválido");
+        }
+
+        if ($this->peso <= 0) {
+            throw new Exception('O campo peso aceita apenas valores positivos');
+        }
+
+        if ($this->altura <= 0) {
+            throw new Exception('O campo altura aceita apenas valores positivos');
+        }
+
         $this->eer = 662 - 9.53 * $this->idade +
         	$this->caf * (15.91 * $this->peso + 539.6 * $this->altura);
     }

@@ -43,6 +43,22 @@ class Mulher extends User implements CalculavelInterface
      */
     public function calculaEer()
     {
+        if ($this->idade <= 0 || $this->idade > 150) {
+            throw new Exception("Idade inválida");
+        }
+
+        if ($this->caf <= 0 || $this->caf > 5) {
+            throw new Exception("CAF (Coeficiente de atividade física) inválido");
+        }
+
+        if ($this->peso <= 0) {
+            throw new Exception('O campo peso aceita apenas valores positivos');
+        }
+
+        if ($this->altura <= 0) {
+            throw new Exception('O campo altura aceita apenas valores positivos');
+        }
+        
         $this->eer = 354 - (6.91 * $this->idade) + $this->caf * (9.36 * $this->peso + 726 * $this->altura);
     }
 

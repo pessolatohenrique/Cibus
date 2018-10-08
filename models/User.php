@@ -317,6 +317,12 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function calculaIdade()
     {
+        $isValid = (bool) strtotime($this->data_nascimento);
+
+        if (!$isValid) {
+            throw new Exception("Data em formato inválido");
+        }
+
         $data1 = new \DateTime(date("Y-m-d"));
         $data2 = new \DateTime($this->data_nascimento);
         $intervalo = $data1->diff( $data2 );
