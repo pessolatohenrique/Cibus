@@ -276,4 +276,43 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertEquals(27, $thirdUser->idade);
     }
 
+    public function testSelectDiet() {
+        $firstUser = new User();
+        $firstUser->eer = 1850;
+        $firstUser->selecionaDieta();
+
+        $secondUser = new User();
+        $secondUser->eer = 1900;
+        $secondUser->selecionaDieta();
+
+        $thirdUser = new User();
+        $thirdUser->eer = 1901;
+        $thirdUser->selecionaDieta();
+
+        $fourthUser = new User();
+        $fourthUser->eer = 2200;
+        $fourthUser->selecionaDieta();
+
+        $fiftyUser = new User();
+        $fiftyUser->eer = 2500;
+        $fiftyUser->selecionaDieta();
+
+        $sixtyUser = new User();
+        $sixtyUser->eer = 2501;
+        $sixtyUser->selecionaDieta();
+
+        $seventyUser = new User();
+        $seventyUser->eer = 2750;
+        $seventyUser->selecionaDieta();
+
+
+        $this->assertEquals(1900, $firstUser->valor_dieta);
+        $this->assertEquals(1900, $secondUser->valor_dieta);
+        $this->assertEquals(2500, $thirdUser->valor_dieta);
+        $this->assertEquals(2500, $fourthUser->valor_dieta);
+        $this->assertEquals(2500, $fiftyUser->valor_dieta);
+        $this->assertEquals(2800, $sixtyUser->valor_dieta);
+        $this->assertEquals(2800, $seventyUser->valor_dieta);
+    }
+
 }
