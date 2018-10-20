@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Exception;
 
 /**
  * This is the model class for table "alimentos".
@@ -83,6 +84,11 @@ class Alimento extends \yii\db\ActiveRecord
     public function calculaCalorias($quantidade)
     {
         $this->total_calorias = 0;
+
+        if ($quantidade <= 0) {
+            throw new Exception("A quantidade deve ser maior ou igual à 1!");
+        }
+
         if ($quantidade != "") {
             $this->total_calorias = $this->calorias * $quantidade;
         }
