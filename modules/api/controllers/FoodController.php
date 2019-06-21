@@ -11,6 +11,10 @@ use app\models\AlimentoSearch;
 class FoodController extends ActiveController
 {
     public $modelClass = 'app\models\Alimento';
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
+    ];
 
     public function extraFields()
     {
@@ -32,10 +36,6 @@ class FoodController extends ActiveController
         unset($actions['index']);
         return $actions;
     }
-
-    // public function extraFields() {
-    //     return ['alimento', 'refeicao'];
-    // }
 
     public function actionIndex() {
         $searchModel = new AlimentoSearch();
