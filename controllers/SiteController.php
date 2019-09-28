@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use app\components\CalculateHelper;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
@@ -15,6 +16,10 @@ use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\UploadUser;
 use app\models\UsuarioFactory;
+use app\models\UsuarioRefeicao;
+use app\models\UsuarioRefeicaoSearch;
+use app\models\HistoricoPesoSearch;
+use app\models\HistoricoPeso;
 
 class SiteController extends Controller
 {
@@ -78,6 +83,16 @@ class SiteController extends Controller
         ];
     }
 
+    public function getTotalCalories() {
+        $searchModel = new UsuarioRefeicaoSearch();
+        $dataProvider = $searchModel->searchSumGroup(Yii::$app->request->queryParams);
+        $result_models = $dataProvider->getModels();
+        $total_calories = CalculateHelper::calculateColumn($result_models,'calorias_total');
+        $total_formatted = $total_calories > 0 ? $total_calories : "0000";
+
+        return $total_formatted;
+    }
+
     /**
      * Displays homepage.
      *
@@ -92,12 +107,25 @@ class SiteController extends Controller
             $objeto_criado = $factory->createUser(Yii::$app->user->identity->sexo);
             $model = $objeto_criado->find()->where(['id' => Yii::$app->user->identity->id])->one();
 
+            $mealSearchModel = new UsuarioRefeicaoSearch();
+            $mealDataProvider = $mealSearchModel->search(Yii::$app->request->queryParams);
+            $mealDataProvider->pagination = ['pageSize' => 5];
+
+            $modelUserMeal = new UsuarioRefeicao();
+            $mealCaloriesProvider = $mealSearchModel->searchSumGroup(Yii::$app->request->queryParams);
+
+            $weightModel = new HistoricoPesoSearch();
+            $weightProvider = $weightModel->search(Yii::$app->request->queryParams);
+
             return $this->render('index',[
-                'model' => $model
+                'model' => $model,
+                'total_calories' => $this->getTotalCalories(),
+                'mealDataProvider' => $mealDataProvider,
+                'caloriesChart' => $modelUserMeal->generatePizzaChart($mealCaloriesProvider->getModels()),
+                'weightDates' => array_column($weightProvider, "data_lancamento"),
+                'weightValues' => HistoricoPeso::obtemPesos($weightProvider)
             ]);
         }
-        
-        
     }
 
     /**

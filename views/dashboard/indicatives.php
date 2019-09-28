@@ -8,9 +8,9 @@ use app\components\FormatterHelper;
 			<div class="box box-theme">
 				<div class="box-body">
 					<p class="text-center text-white">
-						Bom Dia, Henrique!
+						Olá, <?=Yii::$app->user->identity->username?>!
 						<br>
-						<span class="info-text">0000 kcal</span>
+						<span class="info-text"><?=$total_calories?> kcal</span>
 						foram consumidas hoje
 					</p>
 				</div>

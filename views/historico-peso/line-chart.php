@@ -1,8 +1,18 @@
 <div class="grafico-gerado">
+    <?php
+        if (isset($from_dashboard) && empty($pesos)):
+    ?>
+        <p class="pesquisa-invalida">
+            Não encontramos resultados!
+        </p>
+    <?php
+        endif;
+    ?>       
+    <?php if (!empty($pesos)): ?>
     <?=\dosamigos\highcharts\HighCharts::widget([
         'clientOptions' => [
             'title' => [
-                'text' => 'Histórico de Peso'
+                'text' => isset($from_dashboard) ? '' : 'Histórico de Peso'
              ],
             'xAxis' => [
                 'categories' => $datas_lancamento
@@ -47,5 +57,6 @@
             ]
         ]
     ]);
+                        endif;
     ?>
 </div>
