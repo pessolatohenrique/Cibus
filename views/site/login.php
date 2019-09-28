@@ -8,13 +8,12 @@ use app\models\User;
 $this->title = 'Cibus Nutrição | Login';
 ?>
 <div class="header-login">
-     <h1 class="text-center">
-        <i class="fa fa-apple fa-3x" aria-hidden="true"></i>
-        <br>
-        Login
-    </h1>
+
 </div>
 <div class="login-box">
+<h1 class="text-center">
+        <?= Html::img('@web/imgs/logo.png', ['alt'=>'Healthy Life', 'class'=>'logo']);?>
+    </h1>
     <!-- /.login-logo -->
     <?php if(Yii::$app->session->hasFlash('success')): ?>
         <div class="alert alert-success">
