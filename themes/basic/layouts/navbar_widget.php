@@ -46,7 +46,6 @@ if(!$isVisitor):
 	        	'items' => [
                     ['label' => 'Calorias por Refeição', 'url' => ['../relatorio/calorias-refeicao']],
 	        		['label' => 'Peso e IMC', 'url' => ['../historico-peso']],
-	        		['label' => 'Page 1-2', 'url' => ['#']],
 	        	],
 	        	'options' => ['class' => 'navbar-align'],
 	        ],
