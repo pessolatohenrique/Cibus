@@ -50,6 +50,7 @@ class User extends ActiveRecord implements IdentityInterface
     public $idade;
     public $tmb;
     public $valor_dieta;
+    public $total_consumido;
     public $access_token;
     
     /**
@@ -343,6 +344,10 @@ class User extends ActiveRecord implements IdentityInterface
         }else{
             $this->valor_dieta = 2800;
         }
+    }
+
+    public function calculaPorcentagemConsumida($calorias) {
+        $this->total_consumido = ($calorias * 100) / $this->valor_dieta;
     }
 
 }
