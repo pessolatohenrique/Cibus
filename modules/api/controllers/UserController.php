@@ -42,7 +42,8 @@ class UserController extends ActiveController
         $objeto_criado = $factory->createUser(Yii::$app->user->identity->sexo);
         $model = $objeto_criado->find()->where(['id' => Yii::$app->user->identity->id])->one();
         $total_calories = $this->getTotalCalories();
-        $total_percentage = $model->calculaPorcentagemConsumida($total_calories);
+
+        $model->calculaPorcentagemConsumida($total_calories);
 
         $results_calc = array(
             "imc" => FormatterHelper::formatBrazilian($model->imc),
@@ -52,7 +53,8 @@ class UserController extends ActiveController
             "idade" => $model->idade,
             "tmb" => FormatterHelper::formatBrazilian($model->tmb),
             "valor_dieta" => $model->valor_dieta,
-            "total_consumido" => FormatterHelper::formatBrazilian($model->total_consumido)
+            "total_consumido" => $total_calories,
+            "total_consumido_porcentagem" => FormatterHelper::formatBrazilian($model->total_consumido)
         );
 
         return $results_calc;
