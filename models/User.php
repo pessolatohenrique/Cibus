@@ -51,7 +51,6 @@ class User extends ActiveRecord implements IdentityInterface
     public $tmb;
     public $valor_dieta;
     public $total_consumido;
-    public $access_token;
     
     /**
      * @inheritdoc

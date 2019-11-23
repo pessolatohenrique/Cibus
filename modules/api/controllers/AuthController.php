@@ -6,6 +6,7 @@ use Yii;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
 use app\models\LoginForm;
+use app\models\User;
 
 class AuthController extends ActiveController
 {
@@ -34,10 +35,14 @@ class AuthController extends ActiveController
     
     public function actionLogin()
     {
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->login()) {
-            return ['access_token' => Yii::$app->user->identity->generateToken()];
+            $token = Yii::$app->user->identity->generateToken();
+            $user = User::find()->where(['username' => $model->username])->one();
+            $user->access_token = $token;
+            $user->save(false);
+
+            return ['access_token' => $token];
         } else {
             $model->validate();
             return $model;
